@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector> 
+#include <string>
+using namespace std;
+int vect[3][4] = {
+	3,2,5,3,
+	7,6,1,6,
+	4,9,2,7,
+};
+void spin(int arr, int freq) {
+
+	for (int i = 0; i < freq; i++) {
+		int temp = vect[0][arr];
+		vect[0][arr] = vect[2][arr];
+		vect[2][arr] = vect[1][arr];
+		vect[1][arr] = temp;
+	}
+
+}
+int main() {
+
+	int a, b, c, d;
+	cin >> a >> b >> c >> d;
+
+	spin(0, a);
+	spin(1, b);
+	spin(2, c);
+	spin(3, d);
+
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 4; x++) {
+			cout << vect[y][x];
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+---------------------------------------------------------------------
+선생님 풀이
+#include<iostream>
+using namespace std;
+int main() {
+	int cog[3][4] = {
+		3,2,5,3,
+		7,6,1,6,
+		4,9,2,7
+	};
+	int turn[4];
+	for (int i = 0; i < 4; i++)
+		cin >> turn[i];
+	for (int j = 0; j < 4; j++) {
+		for (int t = 0; t < turn[j]; t++) {
+			int tmp = cog[2][j];
+			for (int i = 2; i > 0; i--) {
+				cog[i][j] = cog[i - 1][j];
+			}
+			cog[0][j] = tmp;
+		}
+	}
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 4; j++) {
+			cout << cog[i][j];
+		}
+		cout << endl;
+	}
+	return 0;
+}

@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector> 
+#include <string>
+using namespace std;
+int vect[5] = { 0 };
+int index, life;
+int main() {
+
+	cin >> index >> life;
+	vect[index] = life;
+	int n = 4 - index;
+	for (int i = 0; i <= n; i++) {
+		if (life == -1) break;
+
+		for (int t = 0; t < 5; t++) {
+			if (vect[t] == 0) cout << '_';
+			else if (vect[t] != 0) cout << vect[t];
+		}
+		cout << '\n';
+		vect[index]--;
+		swap(vect[index], vect[index + 1]);
+		index++;
+		life--;
+
+	}
+	
+
+	return 0;
+}
+	
+-------------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+char ground[6] = "_____";
+
+void print()
+{
+	for (int i = 0; i < 5; i++) {
+		if (ground[i] == '0') cout << '_';
+		else if (ground[i] == '_') cout << '_';
+		else cout << ground[i];
+	}
+	cout << endl;
+}
+
+int main()
+{
+	int idx, timer;
+	cin >> idx >> timer;
+
+	ground[idx] = '0' + timer;
+
+	int y;
+	int before;
+
+	for (y = timer - 1; y >= 0; y--) {
+		print();
+
+		before = idx;
+		idx++;
+		if (idx == 5) idx = 0;
+
+		ground[before] = '_';
+		ground[idx] = y + '0';
+	}
+
+	print();
+
+	return 0;
+}

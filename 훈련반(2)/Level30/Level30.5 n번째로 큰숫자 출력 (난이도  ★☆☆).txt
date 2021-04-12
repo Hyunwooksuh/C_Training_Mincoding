@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {	
+
+	int vect[6] = { 1,5,4,2,-5,-7 };
+	int n; 
+	cin >> n;
+
+	for (int y = 0; y<5; y++) {
+		for (int x = y+1; x<6; x++) {
+			if (vect[y] < vect[x]) {
+				int temp = vect[y];
+				vect[y] = vect[x];
+				vect[x] = temp;
+			}
+		}
+	}
+
+	cout << vect[n - 1];
+
+	return 0;
+}
+-------------------------------------------------------------
+선생님 풀이
+#include<iostream>
+using namespace std;
+int main() {
+	int arr[6] = {
+		1,5,4,2,-5,-7
+	};
+	int n;
+	cin >> n;
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 6 - 1; j++) {
+			if (arr[j] < arr[j + 1]) {
+				int tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
+			}
+		}
+	}
+	cout << arr[n-1];
+	return 0;
+}

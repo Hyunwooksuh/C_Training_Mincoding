@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char arr[10];
+int len;
+char path[3];
+int n;
+void run(int level) {
+
+	if (level == n) {
+		cout << path << '\n';
+		return;
+	}
+	for (int i = 0; i < len; i++) {
+		path[level] = arr[i];
+		run(level + 1);
+	}
+
+}
+int main() 
+{
+	cin >> arr >> n;
+	len = strlen(arr);
+	run(0);
+
+-----------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int n;
+int len;
+char vect[10];
+char history[10];
+
+void run(int level)
+{
+	if (level == n) {
+		cout << history << "\n";
+		return;
+	}
+
+	for (int i = 0; i < len; i++) {
+		history[level] = vect[i];
+		run(level + 1);
+		history[level] = 0;
+	}
+}
+
+int main()
+{
+	cin >> vect;
+	cin >> n;
+
+	len = strlen(vect);
+	run(0);
+
+	return 0;
+}

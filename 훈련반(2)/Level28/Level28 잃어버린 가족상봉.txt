@@ -1,0 +1,104 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+int main() {
+
+	int vect[8][8] = {
+		0,1,1,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,
+		1,0,0,1,1,0,1,0,
+		0,0,1,0,0,1,0,0,
+		0,0,1,0,0,0,0,0,
+		0,0,0,1,0,0,0,0,
+		0,0,1,0,0,0,0,0,
+		1,0,0,0,0,0,0,0,
+	};
+	string name = "ABCDEFGH";
+	char node;
+	cin >> node;
+	
+	int idx;
+	for (int i = 0; i < 8; i++) {
+		if (name[i] == node) idx = i;
+	}
+	int idy;
+	for (int y = 0; y < 8; y++) {
+		if (vect[y][idx] == 1) {
+			idy = y;
+		}
+	}
+	int flag = 0;
+	for (int x = 0; x < 8; x++) {
+		if (name[x] == node) continue;
+		if (vect[idy][x] == 1) {
+			flag++;
+			cout << name[x] << " ";
+		}
+	}
+	if (flag == 0) cout << "없음";
+	
+
+
+	
+
+
+	return 0;
+}
+----------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int vect[8][8] = {
+	0, 1, 1, 0, 0, 0, 0, 1,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 1, 1, 0, 1, 0,
+	0, 0, 0, 0, 0, 1, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+};
+
+int main()
+{
+	char ch;
+	char parent;
+	int flag;
+
+	cin >> ch;
+
+	//1. 부모찾기 
+	flag = 0;
+	int x, y;
+	for (y = 0; y < 8; y++) {
+		for (x = 0; x < 8; x++) {
+			if (vect[y][x] == 1 && x == (ch - 'A')) {
+				parent = y + 'A'; flag = 1; break;
+			}
+		}
+
+		if (flag == 1) break;
+	}
+
+	//최상위 부모라면, 예외처리
+	if (flag == 0) {
+		cout << "없음";
+		return 0;
+	}
+
+	//2. 부모의 자식들 찾기 
+	flag = 0;
+	for (x = 0; x < 8; x++) {
+		if (vect[parent - 'A'][x] == 1 && x != (ch - 'A')) {
+			cout << (char)('A' + x) << " "; flag = 1;
+		}
+	}
+
+	if (flag == 0) {
+		cout << "없음";
+	}
+
+	return 0;
+}

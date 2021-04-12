@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+
+	int input;
+	cin >> input;
+	int vect[20][20] = { 0 };
+	for (int y = 0; y < input; y++) {
+		for (int x = 0; x < input; x++) {
+			cin >> vect[y][x];
+		}
+	}
+	int boss[10] = { 0 };
+	int under[10] = { 0 };
+	int a = 0, b = 0;
+
+	cout << "boss:";
+	//2. 보스탐색	
+	for (int y = 0; y < input; y++) {
+		if (vect[y][0] == 1) {
+			boss[b] = y;
+			cout << boss[b] << " ";
+			b++;
+		}
+	}
+	cout << '\n';
+	cout << "under:";
+	//1. 언더탐색
+	for (int x = 0; x < input; x++) {
+		if (vect[0][x] == 1) {
+			under[a] = x;
+			cout << under[a] << " ";
+			a++;
+		}
+	}
+	
+	
+	
+
+	return 0;
+}
+------------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int map[10][10];
+int n;
+
+void input()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> map[y][x];
+		}
+	}
+}
+
+int main()
+{
+	input();
+
+	//보스 찾아서 출력하기
+	cout << "boss:";
+	for (int y = 0; y < n; y++) {
+		if (map[y][0] == 1) cout << y;
+	}
+	cout << endl;
+
+	//부하 찾아서 출력하기
+	cout << "under:";
+	for (int x = 0; x < n; x++) {
+		if (map[0][x] == 1) cout << x << " ";
+	}
+	cout << endl;
+
+	return 0;
+}

@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstring>
+using namespace std;
+void spin(int time) {
+	int clock[4] = { 12,9,3,6 };
+	int temp[4] = { 0 };
+	for (int i = 0; i<time; i++) {
+		temp[2] = clock[0];
+		temp[0] = clock[1];
+		temp[3] = clock[2];
+		temp[1] = clock[3];
+		memcpy(clock, temp, 4 * 4);
+	}
+	for (int i = 0; i<4; i++) {
+		cout << clock[i] << " ";
+	}
+
+}
+int main() {
+
+	int n;
+	cin >> n;
+	int time = n / 90;
+	spin(time);
+	return 0;
+}
+-------------------------------------------------------------
+선생님 풀이
+#include<iostream>
+using namespace std;
+
+int arr[3][3] = {
+	0,12,0,
+	9,0,3,
+	0,6,0
+};
+
+void turn()
+{
+	int temp = arr[1][0];
+	arr[1][0] = arr[2][1];
+	arr[2][1] = arr[1][2];
+	arr[1][2] = arr[0][1];
+	arr[0][1] = temp;
+}
+int main() {
+	
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n / 90; i++) {
+		turn();
+	}
+
+	cout << arr[0][1] << " ";
+	cout << arr[1][0] << " ";
+	cout << arr[1][2] << " ";
+	cout << arr[2][1] << endl;
+
+	return 0;
+}

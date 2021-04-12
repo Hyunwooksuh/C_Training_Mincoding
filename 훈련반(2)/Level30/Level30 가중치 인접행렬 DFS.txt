@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+struct Node {
+	int n;
+	int val;
+};
+int visited[6] = { 0 };
+int start;
+vector<vector<Node>> alist = {
+	{{2,1},{4,2}},
+	{{0,5},{2,3}},
+	{{5,7}},
+	{{0,2}, {4,8}},
+	{{2,9}},
+	{{0,4},{3,7}},
+};
+void dfs(int now, int sum) {
+
+	cout << now << " " << sum << '\n';
+	for (int i = 0; i < alist[now].size(); i++) {
+		Node next = alist[now][i];
+		if (visited[next.n] == 1) continue;
+		visited[next.n]++;
+		sum = sum + next.val; // 더한 다음에 보내므로, 함수를 돌고 들어와도 sum은 다음에 더한값으로 유지됨
+		dfs(next.n, sum);
+	}
+
+}
+int main() {
+	cin >> start;
+	visited[start] = 1;
+	dfs(start, 0);
+
+	return 0;
+}
+---------------------------------------------------------
+선생님 풀이 : 없음

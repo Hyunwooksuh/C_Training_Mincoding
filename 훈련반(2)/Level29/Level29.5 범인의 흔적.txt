@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cstring>
+#include <vector>
+using namespace std;
+int evid[7][7] = {
+	0,0,0,0,0,0,0,
+	1,0,0,0,0,0,0,
+	1,0,0,0,0,0,0,
+	0,1,0,0,0,0,0,
+	0,0,1,0,0,0,0,
+	0,0,0,0,1,0,0,
+	0,0,0,0,1,0,0,
+};
+int timeStemp[7] = { 8,3,5,6,8,9,10 };
+			  //0 1 2 3 4 5 6 
+int n;
+void run(int now, int level) {
+
+	if (now == 0) {
+		cout << now << "번index(출발)" << '\n';
+		return;
+	}
+
+	for (int i = 0; i < 7; i++) {
+		if (evid[now][i] == 1) {
+			run(i, level + 1);
+			cout << now << "번index(" << timeStemp[now] << "시)" << '\n';
+		}
+
+	}
+
+}
+
+int main() {
+	
+	cin >> n;
+	run(n,0);
+
+	return 0;
+}
+--------------------------------------------------------------
+선생님 풀이
+#include<iostream>
+using namespace std;
+
+int evid[7] = { -1, 0, 0, 1, 2, 4, 4 };
+int time[7] = { 8, 3, 5, 6, 8, 9, 10 };
+
+void persuit(int index)
+{
+	if (index == 0) {
+		cout << "0번index(출발)\n";
+		return;
+	}
+
+	persuit(evid[index]);
+	cout << index << "번index(" << time[index] << "시)\n";
+}
+
+int main()
+{
+	int index;
+	cin >> index;
+
+	persuit(index);
+}

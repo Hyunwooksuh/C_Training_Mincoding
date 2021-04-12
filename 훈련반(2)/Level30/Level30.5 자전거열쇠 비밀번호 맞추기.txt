@@ -1,0 +1,92 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char path[100];
+char pass[3][5];
+char str[100] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+int cnt = 0;
+void run(int level, string pass) {
+	if (level == 4) {
+		cnt++;
+		if (path == pass) {
+			cout << cnt << '\n';
+		}
+		return;
+	}
+
+	for (int i = 0; i < 26; i++) {
+		path[level] = str[i];
+		run(level + 1, pass);
+	}
+
+}
+int main() 
+{
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> pass[i];
+	}
+	for (int i = 0; i < n; i++) {
+		run(0, pass[i]);
+		cnt = 0;
+	}
+
+	return 0;
+}
+
+--------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char history[10];
+char password[10];
+int cnt;
+
+int exitFlag;
+
+void run(int level)
+{
+	if (exitFlag == 1) return;
+
+	if (level == 4) {
+		cnt++;
+		if (strcmp(password, history) == 0) {
+			exitFlag = 1;
+			return;
+		}
+		return;
+	}
+
+	for (int i = 0; i < 26; i++) {
+		history[level] = 'A' + i;
+		run(level + 1);
+		history[level] = 0;
+	}
+}
+
+void init()
+{
+	cnt = 0;
+	for (int i = 0; i < 10; i++) {
+		history[i] = 0;
+	}
+	exitFlag = 0;
+}
+int main()
+{
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		init();
+
+		cin >> password;
+		run(0);
+		cout << cnt << "\n";
+	}
+
+	return 0;
+}

@@ -1,0 +1,108 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int vect[5][4];
+int idy[10] = { 0 };
+int t = 0;
+void blow() {
+	for (int y = 4; y >= 0; y--) {
+		int cnt = 0;
+		for (int x = 0; x < 4; x++) {
+			if (vect[y][x] == 1) cnt++;
+		}
+
+		if (cnt == 4) {
+			for (int x = 0; x < 4; x++) {
+				vect[y][x] = 0;
+			}
+			idy[t++] = y;
+		}
+	}
+}
+int main() {
+
+	//0. 입력
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 4; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	//1. 터뜨리기
+	blow();
+
+	//2.내리기
+	int a = 0;
+	for (int i = 0; i < t; i++) {
+		for (int x = 0; x < 3; x++) {
+			swap(vect[idy[a]][x],vect[idy[a]-t][x]);
+		}
+		a++;
+	}
+
+	//.3 출력
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 4; x++) {
+			cout << vect[y][x] << " ";
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+---------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int map[5][4];
+
+int isLineFull(int line)
+{
+	for (int i = 0; i < 4; i++) {
+		if (map[line][i] == 0) return 0;
+	}
+	return 1;
+}
+
+int main()
+{
+	int x, y;
+	for (y = 0; y < 5; y++) {
+		for (x = 0; x < 4; x++) {
+			cin >> map[y][x];
+		}
+	}
+
+	//가장 아랫줄 부터 검사
+	int t;
+	for (t = 4; t >= 1; t--) {
+		if (isLineFull(t) == 1) {
+
+			//한줄씩 모두 밑으로 당기기
+			for (y = t; y >= 1; y--) {
+				for (x = 0; x < 4; x++) {
+					map[y][x] = map[y - 1][x];
+				}
+			}
+
+			//가장 윗줄 지우기
+			for (x = 0; x < 4; x++) {
+				map[0][x] = 0;
+			}
+
+			//한줄 지웠으면 t 부터 다시 시작
+			t++;
+		}
+	}
+
+	//출력
+	for (y = 0; y < 5; y++) {
+		for (x = 0; x < 4; x++) {
+			cout << map[y][x] << " ";
+		}
+		cout << endl;
+	}
+
+	return 0;
+}

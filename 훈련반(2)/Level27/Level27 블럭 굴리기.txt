@@ -1,0 +1,102 @@
+#include <iostream>
+#include <cstring>;
+#include <vector>
+using namespace std;
+
+int main() {
+
+	int cube[3][3] = {
+		0,5,4,
+		3,0,0,
+		0,0,1,
+	};
+	int result[3][3];
+	int input;
+	cin >> input;
+	
+	for (int i = 0; i < input; i++) {
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
+				if (i % 2 == 0) {
+					result[x][2 - y] = cube[y][x];
+				}
+				else if (i % 2 == 1) {
+					cube[x][2 - y] = result[y][x];
+				}
+			}
+		}
+	}
+
+	if (input % 2 == 1) {
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
+				if (result[y][x] == 0) cout << '_';
+				else cout << result[y][x];
+			}
+			cout << '\n';
+		}
+	}
+	else {
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
+				if (cube[y][x] == 0) cout << '_';
+				else cout << cube[y][x];
+			}
+			cout << '\n';
+		}
+	}
+
+	return 0;
+}
+-----------------------------------------------------------
+선생님 풀이
+#include<iostream>
+using namespace std;
+
+int cube[3][3] = {
+	0,5,4,
+	3,0,0,
+	0,0,1,
+};
+
+void spin()
+{
+	int x, y;
+	int result[3][3];
+
+	//돌린 결과를 result에 저장
+	for (y = 0; y < 3; y++) {
+		for (x = 0; x < 3; x++) {
+			result[x][2-y] = cube[y][x];
+		}
+	}
+
+	//result --> cube로 Copy
+	for (y = 0; y < 3; y++) {
+		for (x = 0; x < 3; x++) {
+			cube[y][x] = result[y][x];
+		}
+	}
+}
+
+int main() {
+
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		spin();
+	}
+
+	//출력
+	int x, y;
+	for (y = 0; y < 3; y++) {
+		for (x = 0; x < 3; x++) {
+			if (cube[y][x] == 0) cout << "_";
+			else cout << cube[y][x];
+		}
+		cout << "\n";
+	}
+
+	return 0;
+}

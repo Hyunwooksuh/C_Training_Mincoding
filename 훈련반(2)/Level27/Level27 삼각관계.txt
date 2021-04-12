@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+
+	int map[5][5] = {
+	0,0,0,0,0,
+	1,0,0,0,0,
+	0,1,0,0,0,
+	0,0,1,0,0,
+	0,0,1,0,0,
+	};
+
+	int vect[5];
+	char name[5][10] = {
+		"Edger","Amy","Bob","Chloe","Diane"
+	};
+
+	for (int x = 0; x < 5; x++) {
+		int cnt = 0;
+		for (int y = 0; y < 5; y++) {
+			if (map[y][x] == 1) cnt++;
+		}
+		vect[x] = cnt;
+	}
+
+	int max = vect[0];
+	int maxidx;
+
+	for (int i = 0; i < 5; i++) {
+		if (vect[i] > max) {
+			max = vect[i];
+			maxidx = i;
+		}
+	}
+
+	cout << name[maxidx];
+
+
+
+
+	
+	return 0;
+}
+-------------------------------------
+선생님 풀이
+#include<iostream>
+using namespace std;
+int main() {
+	char names[5][10] = { "Amy","Bob","Chloe","Diane","Edger" };
+	int arr[5][5] = {
+		0,1,0,0,0,
+		0,0,1,1,0,
+		0,0,0,0,0,
+		0,0,0,0,0,
+		1,0,0,0,0
+	};
+	int maxidx = 0, count[5] = { 0 };
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (arr[i][j])
+				count[i]++;
+		}
+		if (count[maxidx] < count[i])
+			maxidx = i;
+	}
+	cout << names[maxidx];
+
+	return 0;
+}

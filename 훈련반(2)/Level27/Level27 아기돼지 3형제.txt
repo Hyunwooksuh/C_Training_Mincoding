@@ -1,0 +1,100 @@
+#include <iostream>
+#include <cstring>;
+#include <vector>
+using namespace std;
+struct Node {
+	int y;
+	int x;
+};
+char vect[4][4] = { 0 };
+int direct[8][2] = {
+	-1,-1,
+	-1,0,
+	-1,1,
+	0,1,
+	1,1,
+	1,0,
+	1,-1,
+	0,-1
+};
+void getWall(int dy, int dx) {
+	for (int i = 0; i < 8; i++) {
+		int ny = dy + direct[i][0];
+		int nx = dx + direct[i][1];
+		if (ny < 0 || ny > 3 || nx < 0 || nx>3) continue;
+		vect[ny][nx] = '@';
+	}
+}
+
+int main() {
+
+	Node a, b, c;
+	cin >> a.y >> a.x >> b.y >> b.x >> c.y >> c.x;
+
+	vect[a.y][a.x] = '#';
+	vect[b.y][b.x] = '#';
+	vect[c.y][c.x] = '#';
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			if (vect[y][x] == '#') getWall(y, x);
+		}
+	}
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			if (vect[y][x] == '\0') cout << '_';
+			else cout << vect[y][x];
+		}
+		cout << '\n';
+	}
+
+	return 0;
+}
+---------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int main() {
+	char vect[4][5] = { 0 };
+
+	int direct[8][2] = { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1, };
+	int dy, dx, t;
+
+	int input[3][2];
+
+	for (int i = 0; i < 3; i++) {
+		cin >> input[i][0] >> input[i][1];
+		int a = input[i][0];
+		int b = input[i][1];
+		vect[a][b] = '#';
+	}
+
+	for (int i = 0; i<3; i++) {
+		int a = input[i][0];
+		int b = input[i][1];
+
+		for (t = 0; t < 8; t++) {
+			dy = a + direct[t][0];
+			dx = b + direct[t][1];
+			if (dy < 0 || dx < 0 || dy >= 4 || dx >= 4) continue;
+			if (vect[dy][dx] == '#') continue;
+			vect[dy][dx] = '@';
+		}
+	}
+
+	int x, y;
+
+	for (y = 0; y < 4; y++) {
+		for (x = 0; x < 4; x++) {
+			if (vect[y][x] == 0) {
+				cout << "_";
+			}
+			else {
+				cout << vect[y][x];
+			}
+		} cout << endl;
+	}
+
+	return 0;
+}

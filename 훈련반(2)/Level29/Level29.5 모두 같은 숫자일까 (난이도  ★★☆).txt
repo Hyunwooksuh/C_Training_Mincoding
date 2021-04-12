@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstring>
+#include <vector>
+using namespace std;
+int main() {
+	
+	int vect[3][3] = { 0 };
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	for (int y = 0; y < 3; y++) {
+		
+		int flag = 0;
+		for (int x = 0; x < 3; x++) {
+			if (vect[y][0] != vect[y][x]) {
+				flag++;
+			}
+		}
+		if (flag == 0) cout << vect[y][0] << '\n';
+		else cout << 'x' << '\n';
+
+	}
+
+	return 0;
+}
+---------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int vect[3][3];
+
+int main()
+{
+	int x, y;
+	for (y = 0; y < 3; y++) {
+		for (x = 0; x < 3; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	int base;
+	int flag;
+	for (y = 0; y < 3; y++) {
+		base = vect[y][0];
+		flag = 0;
+		for (x = 0; x < 3; x++) {
+			if (base != vect[y][x]) {
+				flag = 1;
+				break;
+			}
+		}
+
+		if (flag == 0) cout << base << endl;
+		else cout << "x" << endl;
+	}
+
+	return 0;
+}

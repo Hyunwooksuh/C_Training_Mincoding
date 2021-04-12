@@ -1,0 +1,108 @@
+#include <iostream>
+#include <vector> 
+#include <string>
+using namespace std;
+string str1;
+string str2;
+string str[20];
+int t = 0;
+void getStr(int a, int b) {
+
+	if (str1[a + 1] != str2[b + 1]) return;
+
+	char temp[10] = { 0 };
+	int i = 0;
+	while (str1[a] == str2[b]) {
+		temp[i++] = str2[b];
+		a++, b++;
+	}
+	str[t++] = temp;
+}
+
+int main() {
+	
+	cin >> str1 >> str2;
+	int index[30] = { 0 };
+
+	int a, b, t = 0;
+	for (a = 0; a < str1.size(); a++) {
+		for (b = 0; b < str2.size(); b++) {
+			if (str1[a] == str2[b]) {
+				getStr(a, b);
+			}
+		}
+	}
+	
+	string maxString;
+	for (int i = 0; i < 20; i++) {
+		if (str[i].length() == 0) continue;
+		if (str[i].length() > maxString.length()) {
+			maxString = str[i];
+		}
+	}
+	cout << maxString;
+	
+
+
+	return 0;
+}
+	
+-----------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char vect1[20] = "ABABCGKABABC";
+char vect2[20] = "BTBCKABABCT";
+int n1, n2;
+int minN;
+
+int getMaxSize(int a, int b)
+{
+	int size = 0;
+	while(1) 
+	{
+		if (a == n1 || b == n2) break;
+		if (vect1[a] != vect2[b]) break;
+		a++;
+		b++;
+		size++;
+	}
+	return size;
+}
+
+int main()
+{
+	cin >> vect1 >> vect2;
+
+	int a, b;
+	n1 = strlen(vect1);
+	n2 = strlen(vect2);
+
+	if (n1 < n2) minN = n1;
+	else minN = n2;
+
+	int size;
+	int maxSize = 0;
+	int maxIndex;
+
+	//a와 b 시작글자위치 선정
+	for (b = 0; b < n2; b++) {
+		for (a = 0; a < n1; a++) {
+
+			size = getMaxSize(a, b); //a, b 부터 최대 길이 구하기
+
+			if (size > maxSize) {
+				maxSize = size;
+				maxIndex = a;
+			}
+		}
+	}
+
+	for (int i = 0; i < maxSize; i++) {
+		cout << vect1[i + maxIndex];
+	}
+
+	return 0;
+}

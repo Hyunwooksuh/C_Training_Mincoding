@@ -1,0 +1,171 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+char vect[4][4];
+void down(int* dy, int* dx) {
+	vect[*dy][*dx] = '_';
+	if (vect[*dy+1][*dx] == '_') {
+		*dy = *dy + 1;
+	}
+
+}
+void up(int* dy, int* dx) {
+	vect[*dy][*dx] = '_';
+	if (vect[*dy-1][*dx] == '_') {
+		*dy = *dy - 1;
+	}
+}
+void right(int* dy, int* dx) {
+	vect[*dy][*dx] = '_';
+	if (vect[*dy][*dx + 1] == '_') {
+		*dx = *dx + 1;
+	}
+}
+void left(int* dy, int* dx) {
+	vect[*dy][*dx] = '_';
+	if (vect[*dy][*dx - 1] == '_') {
+		*dx = *dx - 1;
+	}
+}
+int main() {
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	int dya, dxa, dyd, dxd, dyc, dxc;
+	for (int y = 0; y<4; y++) {
+		for (int x = 0; x<3; x++) {
+			if (vect[y][x] =='A') {
+				dya = y;
+				dxa = x;
+			} else if (vect[y][x] == 'D') {
+				dyd = y;
+				dxd = x;
+			} else if(vect[y][x] == 'C') {
+				dyc = y;
+				dxc = x;
+			}
+		}
+	}
+	
+	//1단계
+	right(&dya, &dxa);
+	vect[dya][dxa] = 'A';
+	right(&dyd, &dxd);
+	vect[dyd][dxd] = 'D';
+	right(&dyc, &dxc);
+	vect[dyc][dxc] = 'C';
+
+	//2단계
+	down(&dya, &dxa);
+	vect[dya][dxa] = 'A';
+	down(&dyd, &dxd);
+	vect[dyd][dxd] = 'D';
+	down(&dyc, &dxc);
+	vect[dyc][dxc] = 'C';
+
+	//3단계
+	left(&dya, &dxa);
+	vect[dya][dxa] = 'A';
+	left(&dyd, &dxd);
+	vect[dyd][dxd] = 'D';
+	left(&dyc, &dxc);
+	vect[dyc][dxc] = 'C';
+
+	//4단계
+	up(&dya, &dxa);
+	vect[dya][dxa] = 'A';
+	up(&dyd, &dxd);
+	vect[dyd][dxd] = 'D';
+	up(&dyc, &dxc);
+	vect[dyc][dxc] = 'C';
+
+	//1단계
+	right(&dya, &dxa);
+	vect[dya][dxa] = 'A';
+	right(&dyd, &dxd);
+	vect[dyd][dxd] = 'D';
+	right(&dyc, &dxc);
+	vect[dyc][dxc] = 'C';
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 3; x++) {
+			cout << vect[y][x];
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+---------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+char vect[4][4];
+
+struct Node
+{
+	char ch;
+	int x, y;
+};
+
+Node player[20];
+int n;
+
+int main()
+{
+
+	for (int i = 0; i < 4; i++) {
+		cin >> vect[i];
+	}
+
+	//1. Player 위치 등록하기 (문자 순서대로)
+	int x, y;
+	char alpa;
+	for (alpa = 'A'; alpa <= 'Z'; alpa++) {
+
+		for (y = 0; y < 4; y++) {
+			for (x = 0; x < 3; x++) {
+				if (vect[y][x] == alpa) {
+					player[n++] = { alpa, x, y };
+				}
+			}
+		}
+	}
+
+
+	//2. 5초간 Player를 순서대로 이동시키기
+	int direct[4][2] = { 0, 1, 1, 0, 0, -1, -1, 0 };
+	int dx, dy, t;
+	int bang;
+
+	for (int i = 0; i < 5; i++) { //5초
+		bang = i % 4;
+
+		for (t = 0; t < n; t++) { //각 플레이어마다
+			dy = player[t].y + direct[bang][0];
+			dx = player[t].x + direct[bang][1];
+
+			if (dy < 0 || dx < 0 || dy >= 4 || dx >= 3) continue;
+			if (vect[dy][dx] == '_') {
+
+				vect[dy][dx] = player[t].ch; //맵에 플레이어를 기록
+				vect[player[t].y][player[t].x] = '_'; //플레이어 이전 흔적 지우기
+				player[t].y = dy;
+				player[t].x = dx;
+
+			}
+		}
+	}
+
+	for (y = 0; y < 4; y++) {
+		cout << vect[y] << endl;
+	}
+
+	return 0;
+}

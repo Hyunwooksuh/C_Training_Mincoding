@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+int n;
+int vect[100][100] = { 0 };
+void run(int now) {
+	cout << now << " ";
+	for (int i = 0; i < n; i++) {
+		if (vect[now][i] == 1) {
+			run(i);
+		}
+	}
+
+}
+int main() {
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> vect[y][x];
+		}
+	}
+	run(0);
+	return 0;
+}
+-----------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int map[100][100];
+int n;
+
+void dfs(int now)
+{
+	cout << now << " ";
+	for (int i = 0; i < n; i++) {
+		if (map[now][i] == 0) continue;
+		dfs(i);
+	}
+
+}
+
+int main()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> map[y][x];
+		}
+	}
+
+	dfs(0);
+
+	return 0;
+}

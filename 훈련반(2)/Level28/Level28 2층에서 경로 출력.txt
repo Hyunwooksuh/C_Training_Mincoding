@@ -1,0 +1,88 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+int vect[20][20];
+int input;
+int path[10];
+void run(int level, int now) {
+
+	if (level == 2) {
+		for (int i = 0; i < 3; i++) {
+			cout << path[i] << " ";
+		}
+		cout << '\n';
+	}
+
+	for (int i = 0; i < input; i++) {
+		if (vect[now][i] == 1) {
+			path[level + 1] = i;
+			run(level+1, i);
+			path[level + 1] = 0;
+		}
+	}
+}
+int main() {
+	
+	cin >> input;
+	for (int y = 0; y < input; y++) {
+		for (int x = 0; x < input; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	path[0] = 0;
+	run(0,0);
+
+	
+
+
+	return 0;
+}
+----------------------------------------------------
+선생님풀이 
+#include <iostream>
+#include <string>
+using namespace std;
+
+int n;
+int map[10][10];
+int path[10];
+
+void input()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> map[y][x];
+		}
+	}
+}
+
+void dfs(int level, int now)
+{
+	if (level == 2) {
+		for (int i = 0; i <= level; i++) {
+			cout << path[i] << " ";
+		}
+		cout << "\n";
+		return;
+	}
+
+	for (int i = 0; i < n; i++) {
+		if (map[now][i] == 1) {
+			path[level + 1] = i;
+			dfs(level + 1, i);
+			path[level + 1] = 0;
+		}
+	}
+}
+
+int main()
+{
+	input();
+	path[0] = 0;
+	dfs(0, 0);
+
+	return 0;
+}

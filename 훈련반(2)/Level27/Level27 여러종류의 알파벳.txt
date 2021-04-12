@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cstring>;
+#include <vector>
+using namespace std;
+int main() {
+
+	char arr[11];
+	cin >> arr;
+
+	int n = strlen(arr);
+
+	int dat[100] = { 0 };
+	for (int i = 0; i < n; i++) {
+		dat[arr[i]]++;
+	}
+
+	int cnt = 0;
+	for (int i = 0; i < 100; i++) {
+		if (dat[i] != 0) cnt++;
+	}
+
+	cout << cnt << "종류";
+
+	
+	return 0;
+}
+-----------------------------------------------------
+선생님 풀이
+#include<iostream>
+#include<cstring>
+using namespace std;
+int main() {
+	char str[10];
+	cin >> str;
+	int hash[130] = { 0 };
+	for (int i = 0; i<strlen(str); i++) {
+		hash[str[i]]++;
+	}
+	int count=0;
+	for (int i = 0; i < 130; i++)
+		if (hash[i])
+			count++;
+	cout << count << "종류";
+	return 0;
+}

@@ -1,0 +1,97 @@
+#include <iostream>
+#include <cstring>;
+#include <vector>
+using namespace std;
+
+int main() {
+
+	int number[6];
+	char command[7];
+
+	for (int i = 0; i < 6; i++) {
+		cin >> number[i];
+	}
+	cin >> command;
+
+	for (int y = 0; y < 6; y++) {
+		for (int x = y + 1; x < 6; x++) {
+			if (number[x] > number[y]) swap(number[x], number[y]);
+		}
+	}
+
+	int a = 5, b = 0;
+	for (int i = 0; i < 6; i++) {
+		if (command[i] == 'm') {		
+			cout << number[a];
+			a--;
+		}
+		else if (command[i] == 'x') {
+			cout << number[b];
+			b++;
+		}
+	}
+
+	return 0;
+}
+---------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int number[6];
+char command[7];
+int via[6];
+
+int getMinIndex()
+{
+	int min = 99999;
+	int minIndex;
+	for (int i = 0; i < 6; i++) {
+		if (via[i] == 0) {
+			if (number[i] < min) {
+				min = number[i];
+				minIndex = i;
+			}
+		}
+	}
+	return minIndex;
+}
+
+int getMaxIndex()
+{
+	int max = -99999;
+	int maxIndex;
+	for (int i = 0; i < 6; i++) {
+		if (via[i] == 0) {
+			if (number[i] > max) {
+				max = number[i];
+				maxIndex = i;
+			}
+		}
+	}
+	return maxIndex;
+}
+
+int main()
+{
+	for (int i = 0; i < 6; i++) {
+		cin >> number[i];
+	}
+
+	cin >> command;
+
+	int ret = 0;
+	for (int i = 0; i < 6; i++) {
+		if (command[i] == 'm') {
+			ret = getMinIndex();
+		}
+		if (command[i] == 'x') {
+			ret = getMaxIndex();
+		}
+
+		cout << number[ret];
+		via[ret] = 1; //다시 선택 못하도록 세팅
+	}
+
+	return 0;
+}
