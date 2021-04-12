@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+void reverse(string& str)
+{
+	string temp;
+	int n = str.length();
+
+	for (int i = n - 1; i >= 0; i--) {
+		temp += str[i];
+	}
+
+	str = temp;
+}
+
+int main()
+{
+	int num;
+	string str;
+	int n;
+
+	cin >> num;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		num *= 2;
+		str = to_string(num);
+		reverse(str);
+		num = stoi(str);
+	}
+
+	cout << num;
+
+	return 0;
+}
+---------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <string>
+using namespace std;
+
+void reverse(string& str)
+{
+	string temp;
+	int n = str.length();
+
+	for (int i = n - 1; i >= 0; i--) {
+		temp += str[i];
+	}
+
+	str = temp;
+}
+
+int main()
+{
+	int num;
+	string str;
+	int n;
+
+	cin >> num;
+	cin >> n;
+
+	for (int i = 0; i < n; i++)
+	{
+		num *= 2;
+		str = to_string(num);
+		reverse(str);
+		num = stoi(str);
+	}
+
+	cout << num;
+
+	return 0;
+}
