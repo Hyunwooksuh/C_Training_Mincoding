@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+using namespace std;
+string name;
+string str[100];
+	
+int isExist(string line) {
+
+	while (1) {
+
+		int ret = line.find(name);
+		if (ret == -1) break;
+		else return 1;
+
+	}
+	return 0;
+
+}
+int main() {
+	
+	cin >> name;
+	int n;
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> str[i];
+	}
+
+	for (int i = 0; i < n; i++) {
+		int t = isExist(str[i]);
+		if (t == 1) cout << 'O' << '\n';
+		else cout << 'X' << '\n';
+	}
+
+
+}
+
+--------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+	int n;
+	string name;
+	string str[100];
+	cin >> name >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> str[i];
+	}
+
+	for (int i = 0; i < n; i++) {
+		if (str[i].find(name) == -1) cout << "X\n";
+		else cout << "O\n";
+	}
+
+	return 0;
+}

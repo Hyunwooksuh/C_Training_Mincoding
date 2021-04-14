@@ -1,0 +1,48 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char vect[20];
+void run(int level) {
+
+	if (level == 1) {
+		cout << level << " ";
+		return;
+	}
+	cout << level << " ";
+	run(level - 1);
+	cout << level << " ";
+
+
+}
+int main() {
+	
+	cin >> vect;
+	int n = strlen(vect);
+	run(n);
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+void run(int level)
+{
+	cout << level << " ";
+	if (level == 1) return;
+
+	run(level - 1);
+	cout << level << " ";
+}
+
+int main()
+{
+	char vect[100];
+	cin >> vect;
+	int len = strlen(vect);
+
+	run(len);
+	return 0;
+}

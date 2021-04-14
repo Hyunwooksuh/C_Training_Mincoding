@@ -1,0 +1,73 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main() {
+
+	char vect[4][11];
+	int arrlen[4];
+	int index[4];
+	for (int i = 0; i < 4; i++) {
+		cin >> vect[i];
+		int n = strlen(vect[i]);
+		arrlen[i] = n;
+		index[i] = i;
+	}
+	
+	for (int y = 0; y <= 2; y++) {
+		for (int x = y + 1; x <= 3; x++) {
+			if (arrlen[y] > arrlen[x]) {
+				int temp = arrlen[y];
+				arrlen[y] = arrlen[x];
+				arrlen[x] = temp;
+
+				int temp2 = index[y];
+				index[y] = index[x];
+				index[x] = temp2;
+			}
+		}
+	}
+	for (int i = 0; i < 4; i++) {
+		cout << vect[index[i]] << '\n';
+	}
+
+	return 0;
+}
+---------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+	char vect[4][10];
+
+	for (int i = 0; i < 4; i++)
+	{
+		cin >> vect[i];
+	}
+
+	int x, y;
+	for (x = 0; x < 4; x++)
+	{
+		for (y = x + 1; y < 4; y++)
+		{
+			int a = strlen(vect[x]);
+			int b = strlen(vect[y]);
+			char temp[10];
+			if (a > b)
+			{
+				strcpy(temp, vect[x]);
+				strcpy(vect[x], vect[y]);
+				strcpy(vect[y], temp);
+			}
+		}
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		cout << vect[i] << endl;
+	}
+	return 0;
+}

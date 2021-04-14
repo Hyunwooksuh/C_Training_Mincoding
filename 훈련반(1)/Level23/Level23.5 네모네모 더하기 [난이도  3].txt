@@ -1,0 +1,117 @@
+#include <iostream>
+using namespace std;
+
+int vect[4][4] = { 0 };
+void daegak() {
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			if (y == x) {
+				vect[3][3] = vect[3][3] + vect[y][x];
+			}
+		}
+	}
+}
+void sero() {
+	for (int i = 0; i < 3; i++) {
+		for (int y = 0; y < 3; y++) {
+			vect[3][i] = vect[3][i] + vect[y][i];
+		}
+	}
+
+
+}
+void garo() {
+	for (int i = 0; i < 3; i++) {
+		for (int x = 0; x < 3; x++) {
+			vect[i][3] = vect[i][3] + vect[i][x];
+		}
+	}
+}
+int main() {
+
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	garo();
+	sero();
+	daegak();
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			cout << vect[y][x] << " ";
+		}
+		cout << '\n';
+	}
+
+	
+
+	return 0;
+
+}
+
+--------------------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+using namespace std;
+
+int map[4][4];
+
+int main()
+{
+	int x, y, t;
+	int sum;
+	//입력
+	for (y = 0; y < 3; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			cin >> map[y][x];
+		}
+	}
+
+	//가로줄
+	for (y = 0; y < 3; y++)
+	{
+		sum = 0;
+		for (x = 0; x < 3; x++)
+		{
+			sum += map[y][x];
+		}
+		map[y][3] = sum;
+	}
+
+	//세로줄
+	for (x = 0; x < 3; x++)
+	{
+		sum = 0;
+		for (y = 0; y < 3; y++)
+		{
+			sum += map[y][x];
+		}
+		map[3][x] = sum;
+	}
+
+	//대각선
+	sum = 0;
+	for (t = 0; t < 3; t++)
+	{
+		sum += map[t][t];
+	}
+	map[3][3] = sum;
+
+	//출력
+	for (y = 0; y < 4; y++)
+	{
+		for (x = 0; x < 4; x++)
+		{
+			cout << map[y][x] << " ";
+		}
+		cout << endl;
+	}
+
+	return 0;
+}

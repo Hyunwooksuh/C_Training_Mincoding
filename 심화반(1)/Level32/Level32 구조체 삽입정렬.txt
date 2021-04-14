@@ -1,0 +1,129 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct Node {
+	int a;
+	char ch;
+};
+Node vect[100];
+Node tt[100];
+int n;
+
+int main() {
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> vect[i].a >> vect[i].ch;
+	}
+
+	for (int i = 0; i < n; i++) {
+
+		tt[i] = vect[i];
+		for (int x = i; x > 0; x--) {
+
+			if (tt[x].a < tt[x - 1].a || (tt[x].a == tt[x - 1].a && tt[x].ch < tt[x - 1].ch)) {
+				swap(tt[x], tt[x-1]);
+			}
+
+		}
+
+	}
+
+	for (int i = 0; i < n; i++) {
+		cout << tt[i].a << " " << tt[i].ch << '\n';
+	}
+
+	return 0;
+}
+----------------------------------------------------------
+2번째 풀이
+#include <iostream>
+#include <string>
+using namespace std;
+struct Node {
+	int a;
+	char ch;
+};
+Node vect[100];
+Node tt[100];
+int n;
+//			if (tt[x].a < tt[x - 1].a || (tt[x].a == tt[x - 1].a && tt[x].ch < tt[x - 1].ch)) {
+//swap(tt[x], tt[x - 1]);
+//			}
+int compare(Node t1, Node t2) {
+
+	if (t1.a < t2.a) return 1;
+	if (t1.a > t2.a) return 0;
+
+	return t1.ch < t2.ch;
+
+}
+
+int main() {
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> vect[i].a >> vect[i].ch;
+	}
+
+	for (int i = 0; i < n; i++) {
+
+		tt[i] = vect[i];
+		for (int x = i; x > 0; x--) {
+
+			//t1이 우선순위가 더 높으면 1리턴 
+			//숫자 큰 것이 우선 순위 높은 것임, 문자는 작은 것이 우선순위 높은 것임
+			int n = compare(tt[x], tt[x - 1]);
+			if (n == 1) swap(tt[x], tt[x-1]);
+
+
+		}
+
+	}
+
+	for (int i = 0; i < n; i++) {
+		cout << tt[i].a << " " << tt[i].ch << '\n';
+	}
+
+	return 0;
+}
+----------------------------------------------------------------
+선생님 풀이 
+#include <iostream>
+using namespace std;
+
+int n;
+struct Node {
+	int n;
+	char ch;
+} vect[110];
+
+bool compare(int a, int b)
+{
+	if (vect[a].n < vect[b].n) return true;
+	if (vect[a].n > vect[b].n) return false;
+
+	return vect[a].ch < vect[b].ch;
+}
+
+int main()
+{
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> vect[i].n;
+		cin >> vect[i].ch;
+
+		for (int x = i; x >= 1; x--) {			
+			if (compare(x - 1, x) == 0) {
+				swap(vect[x - 1], vect[x]);
+			}
+			else break;
+		}
+	}
+
+	for (int i = 0; i < n; i++) {
+		cout << vect[i].n << " " << vect[i].ch << endl;
+	}
+
+	return 0;
+}

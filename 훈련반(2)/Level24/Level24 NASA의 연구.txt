@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+//A~K 11개
+string line;
+int getCnt(char ch) {
+	int cnt = 0;
+	int a = 0;
+	while (1) {
+			
+		int ret = line.find(ch,a);
+		if (ret == -1) break;
+
+		a = ret + 1;
+		cnt++;
+
+	}
+	return cnt;
+}
+
+int main() {
+
+	int count[11] = { 0 };
+	cin >> line;
+	for (int i = 0; i < 11; i++) {
+		int n = getCnt('A' + i);
+		count[i] = n;
+	}
+
+	int max = count[0];
+	char maxCh = 'A';
+	int min = count[0];
+	char minCh = 'A';
+	for (int i = 0; i < 11; i++) {
+		if (count[i] > max) {
+			max = count[i];
+			maxCh = 'A' + i;
+		}
+	}
+	for (int i = 0; i < 11; i++) {
+		if (count[i] < min) {
+			min = count[i];
+			minCh = 'A' + i;
+		}
+	}
+	cout << maxCh << '\n' << minCh;
+	
+
+}
+
+---------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+	int dat[100] = { 0 };
+	string str;
+
+	cin >> str;
+	for (int i = 0; i < str.size(); i++) {
+		dat[str[i]]++;
+	}
+
+	char min = 'A';
+	char max = 'A';
+	for (int i = 'A'; i <= 'K'; i++) {
+		if (dat[min] > dat[i]) min = i;
+		if (dat[max] < dat[i]) max = i;
+	}
+
+	cout << max << "\n" << min;
+
+	return 0;
+}

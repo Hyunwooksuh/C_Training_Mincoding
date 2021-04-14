@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+char vect[3][5] = {
+	"____",
+	"____",
+	"____"
+};
+int isSafe(int idy, int idx) {
+
+	int cntgaro = 0;
+	int cntsero = 0;
+	//1. 가로줄 check
+	for (int i = 0; i < 4; i++) {
+		if (vect[idy][i] == '#') cntgaro++;
+	}
+	if (cntgaro >= 2) return 0;
+	//2. 세로줄 check
+	for (int i = 0; i < 3; i++) {
+		if (vect[i][idx] == '#') cntsero++;
+	}
+	if (cntsero >= 2) return 0;
+
+	return 1;
+}
+int main() {
+
+	int idy, idx;
+	for (int i = 0; i < 3; i++) {
+		cin >> idy >> idx;
+		vect[idy][idx] = '#';
+	}
+	int n;
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 4; x++) {
+			if (vect[y][x] == '#') {
+				int idy = y;
+				int idx = x;
+				n = isSafe(idy, idx);
+				if (n == 0) break;
+			}
+		}
+		if (n == 0) break;
+	}
+
+	if (n == 0) cout << "위험";
+	else if (n == 1) cout << "안전";
+
+
+	return 0;
+
+}
+
+---------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+using namespace std;
+
+char map[3][4];
+
+int main()
+{
+	int bucketY[10] = { 0 };
+	int bucketX[10] = { 0 };
+	int flag = 0;
+
+	//X, Y좌표중 같은 값이 입력되면 위험
+	for (int i = 0; i < 3; i++)
+	{
+		int a, b;
+		cin >> a >> b;
+
+		bucketY[a]++;
+		bucketX[b]++;
+		if (bucketY[a] == 2) flag = 1;
+		if (bucketX[b] == 2) flag = 1;
+	}
+
+	if (flag == 1) cout << "위험";
+	else cout << "안전";
+
+	return 0;
+}

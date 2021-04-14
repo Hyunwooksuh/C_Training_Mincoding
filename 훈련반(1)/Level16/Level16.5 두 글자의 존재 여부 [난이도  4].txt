@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+char vect[2][7] = {
+	"A79TKQ",
+	"MINCOD",
+};
+void isExist(char temp) {
+	int flag = 0;
+	for (int y = 0; y < 2; y++) {
+		for (int x = 0; x < 7; x++) {
+			if (vect[y][x] == temp) {
+				flag++;
+				break;
+			}
+		}
+		if (flag == 1) break;
+	}
+
+	if (flag == 1) cout << temp << " : 존재\n";
+	else if (flag == 0) cout << temp << " : 없음\n";
+}
+int main() {
+
+	char a, b;
+	cin >> a >> b;
+
+	isExist(a);
+	isExist(b);
+
+
+
+	return 0;
+}

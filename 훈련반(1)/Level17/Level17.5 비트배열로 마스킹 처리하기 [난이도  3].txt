@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+int main() {
+
+	int vect[4] = { 3,5,4,2 };
+	int bit[4];
+	int sum = 0;
+	for (int i = 0; i < 4; i++) {
+		cin >> bit[i];
+		if (bit[i] != 0) {
+			sum = sum + vect[i];
+		}
+	}
+
+	cout << sum;
+	return 0;
+}

@@ -1,0 +1,77 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char vect[11];
+
+int isSame(int x) {
+
+	int t = 0;
+	for (int i = 0; i < x; i++) {
+		if (vect[i] != vect[x + t]) {
+			return 0;
+		}
+		t++;
+	}
+	return 1;
+}
+
+int main () {
+
+	cin >> vect;
+	int n = strlen(vect);
+	if (n % 2 == 1) {
+		cout << "다른문장";
+	}
+	else if (n % 2 == 0) {
+		int ret = isSame(n / 2);
+		if (ret == 1) {
+			cout << "동일한문장";
+		}
+	}
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	char vect[11];
+	int len;
+	int middle;
+	int flag;
+
+	cin >> vect;
+
+	for (int i = 0; i < 11; i++)
+	{
+		if (vect[i] == '\0')
+		{
+			len = i;
+			break;
+		}
+	}
+
+	middle = len / 2;
+	if (middle * 2 != len)
+	{
+		cout << "다른문장";
+		return 0;
+	}
+
+	int t = middle;
+
+	for (int x = 0; x < middle; x++)
+	{
+		if (vect[x] != vect[t])
+		{
+			cout << "다른문장";
+			return 0;
+		}
+		t++;
+	}
+
+	cout << "동일한문장";
+	return 0;
+}

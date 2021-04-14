@@ -1,0 +1,143 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+	
+	string str;
+	cin >> str;
+	//1. 괄호정리
+	int a = 0, b = 0;
+	while (1) {
+		a = str.find('(', a);
+		if (a == -1) break;
+		if (str[a + 1] == str[a]) str.erase(a + 1, 1);
+		else a++;
+	}
+	while (1) {
+		b = str.find(')', b);
+		if (b == -1) break;
+		if (str[b + 1] == str[b]) str.erase(b + 1, 1);
+		else b++;
+	}
+
+	//2. 웃는 눈 3 → 2개로 
+	int c = 0;
+	while (1) {
+		c = str.find("^^^", c);
+		if (c == -1) break;
+		str.erase(c, 1);
+		c++;
+	}
+
+	//3. 눈 사이 한글자를 _로 정리
+	int d = 0, e;
+	while (1) {
+		d = str.find('^', d);
+		e = str.find('^', d + 1);
+		if (e == -1) break;
+		string tar = str.substr(d+1, (e-1)-(d+1)+1);
+		for (int i = 0; i < tar.length(); i++) {
+			if (tar[i] == '(' || tar[i] == ')') continue;
+			else {
+				tar.erase(i,1);
+				tar.insert(i, "_");
+				str[d + 1+i] = tar[i];
+			}
+		}
+		d = e + 1;
+	}
+	cout << str;
+}
+
+-----------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string str;
+int n;
+
+void removeChar(char ch)
+{
+	//괄호 한개로 정리
+
+	string tar;
+	tar += ch;
+	tar += ch;
+
+	int a = -1;
+	int b;
+	while (1) {
+		a = str.find(tar, a + 1);
+		if (a == -1) break;
+
+		for (int i = a; i < n; i++) {
+			if (str[i] != ch) {
+				b = i;
+				break;
+			}
+		}
+
+		int size = b - a - 1;
+		str.erase(a, size);
+	}
+}
+
+void step1()
+{
+	removeChar('(');
+	removeChar(')');
+}
+void step2()
+{
+	//눈웃음 ^^ 두개로 정리
+
+	int a = -1;
+	int b;
+	while (1) {
+		a = str.find("^^^", a + 1);
+		if (a == -1) break;
+
+		for (int i = a; i < n; i++) {
+			if (str[i] != '^') {
+				b = i;
+				break;
+			}
+		}
+
+		int size = b - a - 2;
+		str.erase(a, size);
+	}
+
+}
+void step3()
+{
+	//눈과 눈 사이 _ 하나로 정리
+	int a = -1;
+	int b = 1;
+
+	while (1) {
+		a = str.find('^', a + 1);
+		if (a == -1) break;
+		if (a + 2 >= n) break;
+
+		if (str[a + 2] == '^') str[a + 1] = '_';
+	}
+}
+
+int main()
+{
+	//freopen("Text.txt", "r", stdin);
+	cin >> str;
+	n = str.length();
+
+	step1();
+	step2();
+	step3();
+
+	cout << str;
+	
+	return 0;
+}

@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+struct Node {
+    int age;
+    Node* next1;
+    Node* next2;
+};
+int main()
+{
+    Node* head;
+    Node simpson, woman1, woman2, man1, man2, man3;
+    simpson.age = 20;
+    woman1.age = 29;
+    woman2.age = 30;
+
+    head = &simpson;
+    simpson.next1 = &woman1;
+    simpson.next2 = &woman2;
+
+
+    woman1.next1 = &man1;
+    woman1.next2 = &man2;
+    
+    woman2.next1 = &woman1;
+    woman2.next2 = &man3;
+
+    return 0;
+}
+
+-----------------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+struct Node {
+	int age;
+	Node* next1, * next2;
+};
+int main() {
+	Node simson, woman1, man1, man2, woman2, man3;
+	Node* head;
+	simson.age = 20;
+	woman1.age = 29;
+	man1.age = 25;
+	man2.age = 40;
+	woman2.age = 30;
+	man3.age = 38;
+	head = &simson;
+	simson.next1 = &woman1;
+	simson.next2 = &woman2;
+	woman1.next1 = &man1;
+	woman1.next2 = &man2;
+	man1.next1 = man1.next2 = NULL;
+	man2.next1 = man2.next2 = NULL;
+	woman2.next1 = simson.next1;
+	woman2.next2 = &man3;
+	man3.next1 = man3.next2 = NULL;
+
+	return 0;
+}

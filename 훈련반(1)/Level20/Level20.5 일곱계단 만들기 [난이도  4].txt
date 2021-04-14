@@ -1,0 +1,47 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main() {
+
+	char ch;
+	cin >> ch;
+	char point = ch - 3;
+
+	for (int i = 0; i < 7; i++) {
+		
+		if (point < 'A') {
+			point = point + 26;
+		}
+		if (point > 'Z') {
+			point = point - 26;
+		}
+		cout << point;
+		point++;
+		
+
+	}
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	char ch;
+	char input;
+	cin >> input;
+
+	for (int i = input - 3; i <= input + 3; i++)
+	{
+		ch = i;
+
+		if (ch < 'A') ch += 26;
+		if (ch > 'Z') ch -= 26;
+
+		cout << (char)ch;
+	}
+
+	return 0;
+}

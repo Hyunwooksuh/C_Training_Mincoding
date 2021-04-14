@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+struct Node {
+	int y, x;
+};
+int main() {
+
+	Node v[6];
+
+	int vect[5][5] = { 0 };
+	for (int i = 0; i < 6; i++) {
+		cin >> v[i].y >> v[i].x;
+		vect[v[i].y][v[i].x]++;
+	}
+
+	int flag = 0;
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			if (vect[y][x] > 1) {
+				flag++;
+				break;
+			}
+		}
+	}
+
+	if (flag == 1) cout << "중복된좌표발견";
+	else cout << "중복없음";
+
+	return 0;
+}
+-------------------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+int main() {
+	int map[6][6] = { 0 };
+	int input[6][2];
+
+	int a, b;
+	for (int i = 0; i < 6; i++) {
+		cin >> input[i][0] >> input[i][1];
+	}
+
+	int flag = 0;
+	for (int i = 0; i < 6; i++) {
+		int a = input[i][0];
+		int b = input[i][1];
+
+		if (map[a][b] == 1) {
+			flag = 1;
+			break;
+		}
+		map[a][b] = 1;
+	}
+
+	if (flag == 1) cout << "중복된좌표발견";
+	else cout << "중복없음";
+
+	return 0;
+}

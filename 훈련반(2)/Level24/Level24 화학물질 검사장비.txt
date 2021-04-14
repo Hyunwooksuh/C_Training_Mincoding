@@ -1,0 +1,126 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+	//MPASSOHPASSpasSpassSFAILFFFFAILFAIL
+	string log;
+	cin >> log;
+
+	int pass = 0, fail = 0;
+	int a = 0, b = 0;
+	int c = 0, d = 0;
+	//1. 소문자 p
+	while (1) {
+		int ret = log.find('p', a);
+		if (ret == -1) break;
+		if (log[ret + 1] == 'a') {
+			string str = log.substr(ret, 4);
+			if (str == "pass" || str == "pasS") pass++;
+			else if (str == "paSS" || str == "paSs") pass++;
+		}
+		else if (log[ret + 1] == 'A') {
+			string str = log.substr(ret, 4);
+			if (str == "pAss" || str == "pAsS") pass++;
+			else if (str == "pASS" || str == "pASs") pass++;
+		}
+		a = ret + 1;
+	}
+	// 2. 대문자 P
+	while (1) {
+		int ret = log.find('P', b);
+		if (ret == -1) break;
+		if (log[ret + 1] == 'a') {
+			string str = log.substr(ret, 4);
+			if (str == "Pass" || str == "PasS") pass++;
+			else if (str == "PaSS" || str == "PaSs") pass++;
+		}
+		else if (log[ret + 1] == 'A') {
+			string str = log.substr(ret, 4);
+			if (str == "pAss" || str == "pAsS") pass++;
+			else if (str == "PASS" || str == "PASs") pass++;
+		}
+		b = ret + 1;
+	}
+	//3. 소문자 f
+	while (1) {
+		int ret = log.find('f', c);
+		if (ret == -1) break;
+		if (log[ret + 1] == 'a') {
+			string str = log.substr(ret, 4);
+			if (str == "faiL" || str == "faIl") fail++;
+			else if (str == "faIL" || str == "fail") fail++;
+		}
+		else if (log[ret + 1] == 'A') {
+			string str = log.substr(ret, 4);
+			if (str == "fAiL" || str == "fAIl") fail++;
+			else if (str == "faIL" || str == "fAil") fail++;
+		}
+		c = ret + 1;
+	}
+	//4. 대문자 F
+	while (1) {
+		int ret = log.find('F', d);
+		if (ret == -1) break;
+		if (log[ret + 1] == 'a') {
+			string str = log.substr(ret, 4);
+			if (str == "FaiL" || str == "FaIl") fail++;
+			else if (str == "FaIL" || str == "Fail") fail++;
+		}
+		else if (log[ret + 1] == 'A') {
+			string str = log.substr(ret, 4);
+			if (str == "FAiL" || str == "FAIl") fail++;
+			else if (str == "FAIL" || str == "FAil") fail++;
+		}
+		d = ret + 1;
+	}
+	
+	int ratio = 0;
+	int total = fail + pass;
+	if (total != 0) {
+		ratio = pass* 100 /total;
+	}
+	cout << ratio << '%';
+
+
+}
+-> 모두 소문자로 바꾸는 생각을 했더라면 더 좋았을 것 같다.
+-------------------------------------------------------------------
+선생님 풀이
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string str;
+int findWord(string tar) {
+
+	int cnt = 0;
+	int a = 0;
+	int b;
+	while (1) {
+		b = str.find(tar, a);
+		if (b == -1) break;
+		cnt++;
+		a = b + 1;
+	}
+
+	return cnt;
+}
+
+int main()
+{
+	cin >> str;
+
+	//모두 소문자로
+	for (int i = 0; i < str.size(); i++) {
+		if (str[i] >= 'A' && str[i] <= 'Z') str[i] = str[i] - 'A' + 'a';
+	}
+
+	int a = findWord("pass");
+	int b = findWord("fail");
+
+	cout << a * 100 / (a + b) << "%";
+
+	return 0;
+}

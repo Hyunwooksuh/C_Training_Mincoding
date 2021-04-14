@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char vect[10] = "ATKPTCABC";
+
+int isDistance(char ch1, char ch2) {
+
+	int len = strlen(vect);
+	int idxRight;
+	for (int i = 0; i <= len - 1; i++) {
+		if (vect[i] == ch1) {
+			int toRight = ch1;
+			idxRight = i;
+			break;
+		}
+	}
+	int idxLeft;
+	for (int i = len-1; i >= 0; i--) {
+		if (vect[i] == ch2) {
+			int toLeft = ch2;
+			idxLeft = i;
+			break;
+		}
+	}
+
+	return idxLeft - idxRight;
+
+
+
+}
+
+int main () {
+
+
+	char ch1, ch2;
+	cin >> ch1 >> ch2;
+	int n = isDistance(ch1, ch2);
+	cout << n;
+
+	return 0;
+}

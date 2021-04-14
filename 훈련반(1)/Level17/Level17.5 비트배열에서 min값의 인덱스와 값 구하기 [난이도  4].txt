@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+int main() {
+
+	int mask[6] = { 1,0,1,0,1,0 };
+	int target[6], masked[3];
+	int t = 0;
+	for (int i = 0; i < 6; i++) {
+		cin >> target[i];
+		if (mask[i] == 1) {
+			masked[t] = target[i];
+			t++;
+		}
+	}
+
+	int min = target[0];
+	int mindex = 0;
+	for (int i = 0; i < 3; i++) {
+		if (target[i] < min) {
+			min = target[i];
+			mindex = i;
+		}
+	}
+
+	cout << "arr[" << mindex << "]=" << min;
+	return 0;
+}

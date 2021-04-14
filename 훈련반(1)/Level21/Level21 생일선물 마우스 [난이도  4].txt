@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int y = 5, x = 5;
+void direct(char vect[6]) {
+	if (strcmp(vect, "up") == 0) y--;
+	else if (strcmp(vect, "down") == 0) y++;
+	else if (strcmp(vect, "left") == 0) x--;
+	else if (strcmp(vect, "right") == 0) x++;
+	else if (strcmp(vect, "click") == 0) cout << y << "," << x << endl;
+
+
+}
+int main() {
+	int n;
+	cin >> n;
+	char move[100][6] = { 0 };
+	for (int i = 0; i < n; i++) {
+		cin >> move[i];
+	}
+	for (int i = 0; i < n; i++) {
+		direct(move[i]);
+	}
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+	int n;
+	int y = 5;
+	int x = 5;
+	char cmd[100];
+
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> cmd;
+
+		if (strcmp(cmd, "up") == 0) y--;
+		if (strcmp(cmd, "down") == 0) y++;
+		if (strcmp(cmd, "left") == 0) x--;
+		if (strcmp(cmd, "right") == 0) x++;
+		if (strcmp(cmd, "click") == 0) cout << y << ',' << x << endl;
+	}
+	
+	return 0;
+}

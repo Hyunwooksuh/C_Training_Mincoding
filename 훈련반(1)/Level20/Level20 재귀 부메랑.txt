@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int n;
+int vect[8] = { 3,7,4,1,9,4,6,2 };
+void run(int level) {
+
+	if (level == 0) {
+		cout << vect[level] << " ";
+		return;
+	}
+	cout << vect[level] << " ";
+	run(level - 1);
+	cout << vect[level] << " ";
+
+}
+int main() {
+
+	cin >> n;
+	run(n);
+
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int vect[10] = { 3, 7, 4, 1, 9, 4, 6, 2 };
+
+void run(int level)
+{
+	cout << vect[level] << " ";
+	if (level == 0) return;
+	run(level - 1);
+	cout << vect[level] << " ";
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	run(n);
+
+	return 0;
+}

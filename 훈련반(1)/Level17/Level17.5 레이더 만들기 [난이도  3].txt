@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+int main() {
+
+	char map[5][5];
+	char t = 'A';
+	char ch;
+	cin >> ch;
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			map[y][x] = t;
+			t++;
+		}
+	}
+	int dy, dx;
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 5; x++) {
+			if (map[y][x] == ch) {
+				dy = y;
+				dx = x;
+			}
+		}
+	}
+
+	int offsetdy = dy - 2;
+	int offsetdx = dx - 2;
+
+	cout << offsetdy << ',' << offsetdx;
+
+	return 0;
+}

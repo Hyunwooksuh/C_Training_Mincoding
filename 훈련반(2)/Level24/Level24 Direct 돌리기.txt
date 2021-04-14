@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+using namespace std;
+string str[3][3] = {
+	"BHC","BBQ","KFC",
+	"MC","7AVE","PAPA",
+	"DHC","OBS","MOMS"
+};
+int direct[4][2] = {
+	-1,0,
+	0,-1,
+	1,0,
+	0,1,
+};
+void PRINT(int dy, int dx) {
+
+	string sum = "";
+	for (int i = 0; i < 4; i++) {
+		int ny = dy + direct[i][0];
+		int nx = dx + direct[i][1];
+		if (ny < 0 || ny > 2 || nx < 0 || nx>2) continue;
+		sum = sum + str[ny][nx];
+	}
+	cout << sum;
+
+}
+int main() {
+
+	int y, x;
+	cin >> y >> x;
+	PRINT(y, x);
+}
+
+-------------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string map[3][3] = {
+	"BHC", "BBQ", "KFC",
+	"MC", "7AVE", "PAPA",
+	"DHC", "OBS", "MOMS",
+};
+
+int main()
+{
+	int direct[4][2] = { 
+		-1, 0, 
+		0, -1,
+		1, 0,
+		0, 1,
+	};
+	int x, y;
+	cin >> y >> x;
+
+	string sum;
+	for (int t = 0; t < 4; t++) {
+		int ny = y + direct[t][0];
+		int nx = x + direct[t][1];
+		if (ny < 0 || nx < 0 || ny >= 3 || nx >= 3) continue;
+		sum += map[ny][nx];
+	}
+	cout << sum;
+}
+

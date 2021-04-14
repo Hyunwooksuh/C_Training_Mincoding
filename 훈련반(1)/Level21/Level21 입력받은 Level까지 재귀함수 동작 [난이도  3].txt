@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int n;
+void run(int level) {
+
+	cout << level;
+
+	if (level == n) {
+		return;
+	}
+
+	for (int i = 0; i < 2; i++) {
+		run(level + 1);
+	}
+
+}
+int main() {
+	
+	cin >> n;
+	run(0);
+	
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int limitLevel;
+
+void run(int level)
+{
+	cout << level;
+
+	if (level == limitLevel)
+	{
+		return;
+	}
+
+	for (int x = 0; x < 2; x++)
+	{
+		run(level + 1);
+	}
+}
+
+int main()
+{
+	cin >> limitLevel;
+	run(0);
+	
+	return 0;
+}

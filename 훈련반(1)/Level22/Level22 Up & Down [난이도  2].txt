@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+
+int main() {
+
+	char move[5][5];
+	int dx = 0;
+
+	for (int i = 0; i < 5; i++) {
+		cin >> move[i];
+
+		if (strcmp(move[i], "up") == 0) {
+			dx++;
+		}
+		else if (strcmp(move[i], "down") == 0) {
+			dx--;
+		}
+	}
+
+	if (dx < 0) {
+		cout << "B" << -dx;
+	}
+	else if (dx >= 0) {
+		cout << dx+1;
+	}
+
+	
+
+	
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+int main() {
+
+	char vect[5][5];
+
+	for (int i = 0; i < 5; i++) {
+		cin >> vect[i];
+	}
+
+	int loc = 0;
+
+	for (int i = 0; i < 5; i++) {
+		if (strcmp(vect[i], "up") == 0) loc++;
+		if (strcmp(vect[i], "down") == 0) loc--;
+	}
+
+	if (loc >= 0) cout << loc + 1;
+	else  cout << "B" << -loc;
+
+	return 0;
+}

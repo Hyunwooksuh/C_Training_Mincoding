@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char path[2];
+char name[4] = "ABC";
+void run(int level) {
+
+	if (level == 2) {
+		cout << path << '\n';
+		return;
+	}
+
+	for (int i = 0; i < 3; i++) {
+		path[level] = name[i];
+		run(level + 1);
+		path[level] = 0;
+	}
+
+}
+
+int main() {
+
+	run(0);
+
+
+	return 0;
+}
+-----------------------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+char path[10];
+void recur(int level) {
+	if (level == 2) {
+		cout << path << endl;
+		return;
+	}
+	for (int x = 0; x < 3; x++) {
+		path[level] = 'A' + x;
+		recur(level + 1);
+		path[level] = 0;
+	}
+}
+int main() {
+	recur(0);
+	return 0;
+}

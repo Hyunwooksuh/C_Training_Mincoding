@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+void change (int*a,int*b) {
+
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+
+}
+int main()
+{
+    int a, b;
+    cin >> a >> b;
+    change(&a, &b);
+    cout << a <<" "<< b;
+
+    return 0;
+}
+
+-----------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+void swap(int *a, int *b) {
+	int tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+int main() {
+	int a, b;
+	cin >> a >> b;
+	swap(&a, &b);
+	cout << a << ' ' << b;
+	return 0;
+}

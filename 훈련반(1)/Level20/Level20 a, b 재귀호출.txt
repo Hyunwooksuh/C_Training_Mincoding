@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int a, b;
+void abc(int level) {
+
+	if (level == b) {
+		cout << level << " ";
+		return;
+	}
+	cout << level << " ";
+	abc(level + 1);
+	cout << level << " ";
+
+}
+
+int main () {
+	cin >> a >> b;
+	abc(a);
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int limit;
+
+void run(int level)
+{
+	cout << level << " ";
+	if (level == limit) return;
+	run(level + 1);
+	cout << level << " ";
+}
+
+int main()
+{
+	int n;
+	cin >> n >> limit;
+	run(n);
+	return 0;
+}

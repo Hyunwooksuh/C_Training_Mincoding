@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+int main () {
+
+	int vect[4][4] = { 0 };
+	char a[3];
+	int b[3];
+
+	for (int t = 0; t < 3; t++) {
+		cin >> a[t] >> b[t];
+
+		if (a[t] == 'G') {
+			for (int x = 0; x < 4; x++) {
+				vect[b[t]][x] = 1;
+			}
+		}
+		else if (a[t] == 'S') {
+			for (int y = 0; y < 4; y++) {
+				vect[y][b[t]] = 1;
+			}
+		}
+	}
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			cout << vect[y][x] << " ";
+		}
+		cout << '\n';
+	}
+	
+	
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int vect[4][4] = { 0 };
+	char input[3][2];
+
+	int x, y;
+	int t;
+
+	for (t = 0; t < 3; t++)
+	{
+		cin >> input[t][0] >> input[t][1];
+	}
+
+	int line;
+	for (t = 0; t < 3; t++)
+	{
+		if (input[t][0] == 'G')
+		{
+			for (x = 0; x < 4; x++)
+			{
+				line = input[t][1] - '0';
+				vect[line][x] = 1;
+			}
+		}
+		else
+		{
+			for (y = 0; y < 4; y++)
+			{
+				line = input[t][1] - '0';
+				vect[y][line] = 1;
+			}
+		}
+	}
+
+	for (y = 0; y < 4; y++)
+	{
+		for (x = 0; x < 4; x++)
+		{
+			cout << vect[y][x] << " ";
+		}
+		cout << endl;
+	}
+
+	return 0;
+}

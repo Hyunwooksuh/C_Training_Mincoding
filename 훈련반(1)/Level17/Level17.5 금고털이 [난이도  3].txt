@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+int pass[4] = { 3,7,4,9 };
+int isSame(int input[4]) {
+	for (int i = 0; i < 4; i++) {
+		if (input[i] != pass[i]) {
+			return 0;
+		}
+	}
+	return 1;
+}
+int main() {
+	int input[4];
+	for (int i = 0; i < 4; i++) {
+		cin >> input[i];
+	}
+
+	int result = isSame(input);
+	if (result == 1) cout << "pass";
+	else cout << "fail";
+	
+	return 0;
+}

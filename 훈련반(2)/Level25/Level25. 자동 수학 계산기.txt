@@ -1,0 +1,120 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int calcul(string temp) {
+
+	string tar = temp.substr(1);
+	int ret = stoi(tar);
+	if (temp[0] == '+') {
+		return ret;
+	}
+	else if (temp[0] == '-') {
+		return -ret;
+	}
+
+}
+
+int main() {
+	
+	string str;
+	cin >> str;
+	//1. + 기호 넣어주기 
+	if (str[0] >= '0' && str[0] <= '9') {
+		str.insert(0, "+");
+	}
+
+	//2. 점 찍기
+	for (int i = 1; i < str.length(); i++) {
+		if (str[i] == '+' || str[i] == '-') {
+			if (str[i - 1] == ',') continue;
+			else str.insert(i, ",");
+		}
+	}
+
+	int sum = 0;
+	int a = 0, b;
+	while (1) {
+		b = str.find(",", a);
+		if (b == -1) {
+			string last = str.substr(a);
+			int num = calcul(last);
+			sum += num;
+			break;
+		}
+		string tar = str.substr(a, b-a);
+		int ret = calcul(tar);
+		sum += ret;
+		a = b + 1;
+	}
+	cout << sum;
+
+	return 0;
+}
+--------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string str = "100+100-50+30";
+int n;
+int result;
+
+int getStart(int start) {
+	for (int i = start; i < n; i++) {
+		if (str[i] == '+') return i;
+		if (str[i] == '-') return i;
+	}
+	return -1;
+}
+
+int getEnd(int start) {
+	for (int i = start; i < n; i++) {
+		if (str[i] == '+') return i - 1;
+		if (str[i] == '-') return i - 1;
+	}
+	return n - 1;
+}
+
+void cal(int a, int b) {
+	string temp = str.substr(a + 1, b - a);
+	int num = stoi(temp);
+
+	if (str[a] == '+') {
+		result += num;
+	}
+	if (str[a] == '-') {
+		result -= num;
+	}
+}
+
+int main()
+{
+	cin >> str;
+
+	//맨 앞에 + 가 없으면 + 넣어주기
+	if (str[0] != '-') {
+		str.insert(0, "+");
+	}
+
+	n = str.length();
+
+	int a;
+	int b = -1;
+
+	while (1) {
+
+		a = getStart(b + 1);
+		if (a == -1) break;
+
+		b = getEnd(a + 1);
+		if (b == -1) break;
+
+		cal(a, b);
+	}
+
+	cout << result;
+
+	return 0;
+}

@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+struct robot {
+    int a;
+    int b;
+    char t[6];
+};
+
+int main()
+{
+    robot robert;
+    cin >> robert.a >> robert.b >> robert.t;
+
+    robot* p;
+    p = &robert;
+    cout << p->a + p->b << " " << p->t;
+
+    return 0;
+}
+
+------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+struct robot {
+	int a, b;
+	char t[6];
+};
+int main() {
+	robot robert;
+	robot* p;
+	cin >> robert.a >> robert.b >> robert.t;
+	p = &robert;
+	cout << (p->a + p->b) << " " << p->t;
+	return 0;
+}

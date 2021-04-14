@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int cnt = 0;
+string input[5];
+int getCnt(string line) {
+	int a = 0;
+	int sum = 0;
+	while (1) {
+
+
+		int ret = line.find("MCD",a);
+		if (ret == -1) break;
+
+		a = ret + 1;
+		sum++;
+
+	}
+	return sum;
+
+}
+int main() {
+
+	for (int i = 0; i < 5; i++) {
+		cin >> input[i];
+		cnt += getCnt(input[i]);
+	}
+	cout << cnt;
+}
+
+-------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string vect[5];
+
+void input()
+{
+	for (int y = 0; y < 5; y++) {
+		cin >> vect[y];
+	}
+}
+
+int getFind(string str)
+{
+	int a = -1;
+
+	int cnt = 0;
+	while (1) {
+		a = str.find("MCD", a + 1);
+		if (a == -1) break;
+		cnt++;
+	}
+
+	return cnt;
+}
+
+int main()
+{
+	input();
+
+	int cnt = 0;
+	for (int i = 0; i < 5; i++) {
+		cnt += getFind(vect[i]);
+	}
+
+	cout << cnt;
+
+	return 0;
+}

@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int vect[3][3] = {
+		3,1,9,
+		7,2,1,
+		1,0,8,
+	};
+
+	int mask[3][3];
+	int flag = 0;
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> mask[y][x];
+			if (mask[y][x] == 1) {
+				if ((vect[y][x] >= 3) && (vect[y][x] <= 5)) {
+					flag++;
+					break;
+				}
+			}
+		}
+		if (flag == 1) break;
+	}
+
+	if (flag == 1) { cout << "발견"; }
+	else cout << "미발견";
+
+
+	return 0;
+}

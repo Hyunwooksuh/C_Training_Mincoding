@@ -1,0 +1,161 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int isTop(string temp) {
+
+	if (temp == "com") {
+		return 1;
+	}
+	else if (temp == "org") {
+		return 1;
+	}
+	else if (temp == "net") return 1;
+	else return 0;
+
+}
+int main() {
+
+	int cnt = 0;
+	string str = "ABHttp://bbq.comhttps://a.co.krBBQhttpS://KFC.org";
+	//1. 대문자를 소문자로
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] >= 'A' && str[i] <= 'Z') str[i] = str[i] - 'A' + 'a';
+	}
+	//2. http 통일
+	int idx, p = 0;
+	while (1) {
+		idx = str.find("http://", p);
+		if (idx == -1) break;
+		str.insert(idx + 4, "s");
+		p = idx + 8;
+	}
+	//3. co.kr 변환
+	int idx2 = 0, q = 0;
+	while (1) {
+		idx2 = str.find("co.kr", q);
+		if (idx2 == -1) break;
+		str.erase(idx2, 5);
+		str.insert(idx2, "com");
+	}
+
+	//3. 
+	int a = 0, b;
+	while (1) {
+		a = str.find("https://",a);
+		b = str.find(".", a + 1);
+		if (a == -1) break;
+
+		//1) top domain 확인
+		string temp = str.substr(b + 1, 3);
+		int ret = isTop(temp);
+		if (ret == 0) break;
+		//2) 글자 3개 여부 확인
+		string tar = str.substr(a, b - a + 1);
+		if (tar.length() < 11) {
+			a = b + 1;
+			continue;
+		}
+
+		cnt++;
+		a = b + 1;
+	}
+	cout << cnt << "개";
+
+	return 0;
+}
+-----------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string http[100];
+int t;
+
+string makeSmallLetter(string str) {
+	//대문자를 소문자로 모두 변환
+	string temp;
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] >= 'A' && str[i] <= 'Z') {
+			temp += (str[i] - 'A' + 'a');
+		}
+		else temp += str[i];
+	}
+	return temp;
+}
+
+void splitHttp(string str) {
+	int a = 0;
+	int b = 0;
+	int old = 0;
+	int sel;
+	while (1) {
+		a = str.find("http://", old + 1);
+		b = str.find("https://", old + 1);
+
+		if (a == -1 && b == -1) {
+			http[t++] = str.substr(old);
+			break;
+		}
+
+		else if (a == -1 && b != -1) sel = b;
+		else if (a != -1 && b == -1) sel = a;
+		else if (a <= b) sel = a;
+		else sel = b;
+
+		http[t++] = str.substr(old, sel - old);
+		old = sel;
+	}
+}
+
+int possibleCheck(string str) {
+	int a = str.find("http://");
+	int b = str.find("https://");
+	string front;
+	if (a == -1 && b == -1) return 0;
+	if (a == 0) front = "http://";
+	if (b == 0) front = "https://";
+
+	a = str.find(".");
+	if (a == -1) return 0;
+
+	int i;
+	for (i = str.length() - 1; i >= 0; i--) {
+		if (str[i] == '.') break;
+	}
+
+	//라스트 글자 확인
+	string end = str.substr(i);
+	if (!(end == ".com" || end == ".net" || end == ".kr" || end == ".org")) return 0;
+	if (end == ".kr") {
+		end = str.substr(i - 3);
+		if (end != ".co.kr") return 0;
+	}
+
+	int sum = front.length() + end.length();
+	int strn = str.length();
+
+	//세 글자 이상인지 확인
+	if (sum + 3 > strn) return 0;
+	return 1;
+}
+
+int main()
+{
+	string str;
+
+	cin >> str;
+
+	str = makeSmallLetter(str);
+	splitHttp(str);
+
+	int cnt = 0;
+	for (int i = 0; i < t; i++) {
+		cnt += possibleCheck(http[i]);
+		
+	}
+	cout << cnt << "개";
+
+	return 0;
+}

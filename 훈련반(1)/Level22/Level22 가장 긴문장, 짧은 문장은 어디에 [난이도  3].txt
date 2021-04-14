@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main() {
+
+	char vect[4][20];
+	int idx;
+
+	int max_len = 0, max_idx = 0;
+	int min_len = strlen(vect[0]), min_idx = 0;
+	
+	for (int i = 0; i < 4; i++) {
+		cin >> vect[i];	
+	}
+
+	int len;
+	for (int i = 0; i < 4; i++) {
+		len = strlen(vect[i]);
+		if (len > max_len) {
+			max_len = len;
+			max_idx = i;
+		}
+	}
+
+	for (int x = 0; x < 4; x++) {
+		len = strlen(vect[x]);
+		if (len < min_len) {
+		min_len = len;
+		min_idx = x;
+		}
+	}
+
+	cout << "긴문장:" << max_idx << '\n';
+	cout << "짧은문장:" << min_idx << '\n';
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+	char str[4][10];
+
+	for (int i = 0; i < 4; i++)
+	{
+		cin >> str[i];
+	}
+
+	int max = -99;
+	int min = 99;
+
+	int maxIndex;
+	int minIndex;
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		int len = strlen(str[i]);
+
+		if (max < len)
+		{
+			max = len;
+			maxIndex = i;
+		}
+
+		if (min > len)
+		{
+			min = len;
+			minIndex = i;
+		}
+	}
+
+	cout << "긴문장:" << maxIndex << endl;
+	cout << "짧은문장:" << minIndex << endl;
+}

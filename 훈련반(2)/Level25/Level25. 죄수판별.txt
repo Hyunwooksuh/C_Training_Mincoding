@@ -1,0 +1,117 @@
+#include <iostream>
+#include <string>
+using namespace std;
+void addtemp(string temp) {
+	int a = 0, b;
+	string save;
+	string tar;
+	while (1) {
+		b = temp.find("#", a);
+		if (b == -1) break;
+		save = temp.substr(a, b - a);
+		tar = temp.substr(b + 1);
+		int ret = stoi(tar);
+		ret += 17;
+		tar = to_string(ret);
+		a = b + 1;
+	}
+	cout << save + "#" + tar << endl;
+
+}
+
+int main() {
+	
+	string str;
+	cin >> str;
+
+	for (int i = 0; i < str.length(); i++) {
+		if (str[i] >= '0' && str[i] <= '9') {
+			if (str[i + 1] >= 'A' && str[i + 1] <= 'Z') {
+				str.insert(i + 1, ",");
+			}
+		}
+		if (str[i] >= 'A' && str[i] <= 'Z') {
+			if (str[i + 1] >= '0' && str[i + 1] <= '9') {
+				str.insert(i + 1, "#");
+			}
+		}
+	}
+
+
+	int a = 0, b;
+	while (1) {
+
+		b = str.find(",", a);
+		if (b == -1) {
+			string last = str.substr(a);
+			addtemp(last);
+			break;
+		}
+		b--;
+		string temp = str.substr(a, b - a + 1);
+		addtemp(temp);
+		a = b + 2;
+
+	}
+
+
+	return 0;
+}
+------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string str;
+int getIntIndex(int start) {
+	for (int i = start; i < str.length(); i++) {
+		if (str[i] >= '0' && str[i] <= '9') return i;
+	}
+	return -1;
+}
+
+int getCharIndex(int start) {
+	for (int i = start; i < str.length(); i++) {
+		if (str[i] >= 'A' && str[i] <= 'Z') return i;
+	}
+	return -1;
+}
+
+void print(string name, string num)
+{
+	cout << name << "#";
+	int n = stoi(num);
+	n += 17;
+	cout << n << endl;
+}
+
+int main()
+{
+	cin >> str;
+	//str = "AB100CDEF112F4G5";
+
+	int a = 0;
+	int b = 0;
+	string name, num;
+	while (1) {
+		b = getIntIndex(a);
+		name = str.substr(a, b - a);
+		
+		a = b;
+		b = getCharIndex(a);
+		if (b == -1) {
+			b = str.length();
+			num = str.substr(a, b - a);
+			print(name, num);
+			break;
+		}
+
+		num = str.substr(a, b - a);
+		print(name, num);
+		a = b;
+	}
+
+	return 0;
+}

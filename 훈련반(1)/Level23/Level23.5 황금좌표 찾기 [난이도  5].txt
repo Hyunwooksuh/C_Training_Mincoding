@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+int main() {
+	
+	char target[4][4];
+	char vect[4][5] = {
+		"ABCD",
+		"BBAB",
+		"CBAC",
+		"BAAA",
+	};
+	int bucket[100] = { 0 };
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			cin >> target[y][x];
+		}
+	}
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			if (target[y][x] == vect[y][x]) {
+				bucket[vect[y][x]]++;
+			}
+		}
+	}
+
+	int max = 0;
+	int idx;
+	for (int i = 60; i < 100; i++) {
+		if (bucket[i] > max) {
+			max = bucket[i];
+			idx = i;
+		}
+	}
+	cout << (char)(idx);
+
+	return 0;
+
+}
+
+----------------------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+using namespace std;
+
+char input[4][5];
+char target[4][5] =
+{
+	"ABCD",
+	"BBAB",
+	"CBAC",
+	"BAAA",
+};
+
+int main()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		cin >> input[i];
+	}
+
+	int x, y;
+	int bucket[200] = { 0 };
+	int max = 0;
+	char maxCh;
+
+	for (y = 0; y < 4; y++)
+	{
+		for (x = 0; x < 4; x++)
+		{
+			if (input[y][x] == target[y][x])
+			{
+				char ch = input[y][x];
+				bucket[ch]++;
+
+				if (bucket[ch] > max)
+				{
+					max = bucket[ch];
+					maxCh = ch;
+				}
+			}
+		}
+	}
+
+	cout << maxCh;
+
+	return 0;
+}

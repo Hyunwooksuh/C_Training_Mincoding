@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+int target[6] = {
+	3,7,4,1,2,6
+};
+int univ[2][2];
+int isExist(int temp) {
+	for (int i = 0; i < 6; i++) {
+		if (target[i] == temp) {
+			return 1;
+		}
+	}
+	return 0;
+	
+}
+int main() {
+
+	for (int y = 0; y < 2; y++) {
+		for (int x = 0; x < 2; x++) {
+			
+			cin >> univ[y][x];
+			int result = isExist(univ[y][x]);
+			if (result == 1) cout << "OK" << " ";
+			else cout << "NO" << " ";
+
+		}
+		cout << '\n';
+	}
+
+	
+	return 0;
+}

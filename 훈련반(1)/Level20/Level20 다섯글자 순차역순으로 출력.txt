@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+char vect[6];
+void abc(int level) {
+
+	if (level == 5) {
+		cout << endl;
+		return;
+	}
+	cout << vect[level];
+	abc(level + 1);
+	cout << vect[level];
+
+}
+
+int main () {
+
+	cin >> vect;
+	abc(0);
+
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+using namespace std;
+
+char vect[10];
+
+void run(int level)
+{
+	if (level == 5) {
+		cout << endl;
+		return;
+	}
+	cout << vect[level];
+	run(level + 1);
+	cout << vect[level];
+}
+
+int main()
+{
+	cin >> vect;
+	run(0);
+	return 0;
+}

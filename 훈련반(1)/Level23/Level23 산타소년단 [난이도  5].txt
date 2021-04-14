@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+
+char path[10];
+char vect[6] = "BTSKR";
+int n;
+int cnt = 0;
+int used[100] = { 0 };
+int isExist(char ch) {
+
+	for (int i = 0; i < n; i++) {
+		if (path[i] == ch) return 1;
+	}
+	return 0;
+}
+
+void run(int level) {
+
+	if (level == n) {
+		if (isExist('S') == 0) return;
+		//cout << path << '\n';
+		cnt++;
+		return;
+	}
+
+	for (int i = 0; i < 5; i++) {
+		if (used[vect[i]] != 0) continue;
+		path[level] = vect[i];
+		used[vect[i]]++;
+		run(level + 1);
+		path[level] = 0;
+		used[vect[i]] = 0;
+	}
+
+
+}
+int main() {
+	cin >> n;
+	run(0);
+	cout << cnt;
+}
+-------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int n;
+string name = "BTSKR";
+int via[10];
+int cnt;
+
+void run(int level)
+{
+	if (level == n)
+	{
+		if (via[2] == 1) //S가 포함되어있을때만 (S는 2번index)
+		{
+			cnt++;
+		}
+		return;
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (via[i] == 0)
+		{
+			via[i] = 1;
+			run(level + 1);
+			via[i] = 0;
+		}
+	}
+}
+
+int main()
+{
+	cin >> n;
+	run(0);
+	cout << cnt;
+
+	return 0;
+}

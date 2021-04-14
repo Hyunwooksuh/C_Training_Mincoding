@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main () {
+
+	char arr[11];
+	cin >> arr;
+
+	int dat[100] = { 0 };
+	for (int i = 0; i < 10; i++) {
+		dat[arr[i]]++;
+	}
+
+	int max = 0; 
+	int idx;
+
+	for (int i = 0; i < 100; i++) {
+		if (dat[i] > max) {
+			max = dat[i];
+			idx = i;
+		}
+	}
+
+	cout << (char)(idx);
+
+	return 0;
+}

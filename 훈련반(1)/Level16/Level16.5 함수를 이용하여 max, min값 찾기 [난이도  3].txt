@@ -1,0 +1,37 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int min(char vect[11]) {
+	char min = vect[0];
+	int minIndex = 0;
+	int n = strlen(vect);
+	for (int i = 0; i < n; i++) {
+		if (vect[i] < min) {
+			min = vect[i];
+			minIndex = i;
+		}
+	}
+	return minIndex;
+}
+int max(char vect[11]) {
+	char max = vect[0];
+	int maxIndex = 0;
+	int n = strlen(vect);
+	for (int i = 0; i < n; i++) {
+		if (vect[i] > max) {
+			max = vect[i];
+			maxIndex = i;
+		}
+	}
+	return maxIndex;
+}
+int main() {
+	char vect[11];
+	cin >> vect;
+
+	int maxIndex = max(vect);
+	int minIndex = min(vect);
+	cout << maxIndex << '\n' << minIndex;
+
+	return 0;
+}

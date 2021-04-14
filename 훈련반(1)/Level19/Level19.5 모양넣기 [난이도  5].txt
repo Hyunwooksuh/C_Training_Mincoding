@@ -1,0 +1,60 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main () {
+
+	struct sketchbook {
+		char image[3][3];
+	};
+	sketchbook a;
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> a.image[y][x];
+		}
+	}
+	int bucket[100] = { 0 };
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			bucket[a.image[y][x]]++;
+		}
+	}
+
+	for (int i = 0; i < 100; i++) {
+		if (bucket[i] != 0) {
+			cout << (char)(i);
+		}
+	}
+	
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+#include<iostream>
+using namespace std;
+
+struct sketchbook {
+	char image[3][4];
+};
+
+int main() {
+	sketchbook SB;
+	for (int i = 0; i < 3; i++) {
+		cin >> SB.image[i];
+	}
+	char bucket[200] = { 0 };
+	char ch;
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			ch = SB.image[y][x];
+			bucket[ch] = 1;
+		}
+	}
+
+	for (int i = 'A'; i <= 'Z'; i++) {
+		if (bucket[i] == 1) {
+			cout << (char)i;
+		}
+	}
+	return 0;
+}

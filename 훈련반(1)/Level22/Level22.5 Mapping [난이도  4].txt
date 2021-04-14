@@ -1,0 +1,50 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int map[3][6] = {
+	3,5,4,2,2,3,
+	1,3,3,3,4,2,
+	5,4,4,2,3,5,
+};
+int getNum(char ch1, char ch2) {
+
+	int dy = int(ch1 - 65);
+	int dx = int(ch2 - 49);
+	int num = map[dy][dx];
+	return num;
+}
+
+int main() {
+	char price[5] = {
+		"TPGK"
+	};
+
+	char ch1, ch2;
+	cin >> ch1 >> ch2;
+	int n = getNum(ch1, ch2);
+	cout << price[n-1];
+
+	return 0;
+}
+-----------------------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+int main() {
+	int MAP[3][6] = {
+		3,5,4,2,2,3,
+		1,3,3,3,4,2,
+		5,4,4,2,3,5
+	};
+	char price[6] = "TPGKC";
+
+	char r;
+	int c;
+
+	cin >> r >> c;
+
+	cout << price[MAP[r - 'A'][c - 1] - 1];
+
+	return 0;
+}

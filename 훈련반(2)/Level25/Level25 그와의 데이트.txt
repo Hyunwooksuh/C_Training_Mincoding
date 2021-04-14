@@ -1,0 +1,117 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int caldate(string temp) {
+	if (temp.length() == 2) {
+
+		if (temp == "XX") return 22;
+		else if (temp[0] == 'X') return 2;
+		else if (temp[1] == 'X') {
+			if (temp[0] == '1') return 10;
+			else if (temp[0] == '2') return 10;
+			else if (temp[0] == '3') return 4;
+		}
+		else return 1;
+
+
+	}
+	else if (temp.length() == 1) {
+		if (temp == "X") {
+			return 9;
+		}
+		else return 1;
+	}
+}
+int calmonth(string temp) {
+	if (temp.length() == 2) {
+		if (temp[1] >= '0' && temp[1] <= '2') return 1;
+		else return 3;
+	}
+	else if (temp.length() == 1) {
+		if (temp == "X") {
+			return 9;
+		}
+		else return 1;
+	}
+}
+
+int main() {
+
+	string str;
+	cin >> str;
+
+	//1. 년도 지우기
+	str.erase(0, 5);
+
+	//2. Month, Day 파싱
+	int a = 0, b;
+	b= str.find(".", a);
+	string month = str.substr(a, b - a);
+	string date = str.substr(b + 1);
+
+	int monthCase = calmonth(month);
+	int dateCase = caldate(date);
+
+	int total = monthCase * dateCase;
+	cout << total;
+
+	return 0;
+}
+---------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int isPossible(string tar, string xx)
+{
+	if (tar.length() != xx.length()) return 0;
+	
+	//X가 아니라 숫자인데, 똑같은 값이 아니면 탈락
+	if (xx[0] != 'X' && xx[0] != tar[0]) return 0;	
+	if (tar.length() == 1) return 1;
+
+	if (xx[1] != 'X' && xx[1] != tar[1]) return 0;
+	return 1;
+}
+
+int getMon(string mon)
+{
+	int cnt = 0;
+	for (int i = 1; i <= 12; i++) {
+		string tar = to_string(i);
+		cnt += isPossible(tar, mon);
+	}
+	return cnt;
+}
+
+int getDay(string day)
+{
+	int cnt = 0;
+	for (int i = 1; i <= 31; i++) {
+		string tar = to_string(i);
+		cnt += isPossible(tar, day);
+	}
+	return cnt;
+}
+
+int main()
+{
+	string mon, day;
+	string input;
+
+	cin >> input;
+	//input = "2025.X.1X";
+	
+	int dot = input.find('.', 5);
+	mon = input.substr(5, dot - 4 - 1);
+	day = input.substr(dot + 1);
+
+	int a = getMon(mon);
+	int b = getDay(day);
+	cout << a * b;
+
+	return 0;
+}

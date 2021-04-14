@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int vect[4][3] = {
+	1,5,3,
+	4,5,5,
+	3,3,5,
+	4,6,2,
+};
+int main() {
+
+	int a, b;
+	cin >> a >> b;
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 3; x++) {
+			if ((vect[y][x] >= a) && (vect[y][x] <=b)) {
+				vect[y][x] = 0;
+			}
+		}
+	}
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 3; x++) {
+			if (vect[y][x] == 0) {
+				cout << '#' << " ";
+			}
+			else cout << vect[y][x] << " ";
+		}
+		cout << '\n';
+	}
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int vect[4][3] =
+	{
+		1, 5, 3,
+		4, 5, 5,
+		3, 3, 5,
+		4, 6, 2,
+	};
+
+	int a, b;
+	cin >> a >> b;
+
+	int x, y;
+	for (y = 0; y < 4; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			if (a <= vect[y][x] && vect[y][x] <= b)
+			{
+				vect[y][x] = 0;
+			}
+		}
+	}
+
+	for (y = 0; y < 4; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			if (vect[y][x] == 0) printf("# ");
+			else printf("%d ", vect[y][x]);
+		}
+		printf("\n");
+	}
+
+	return 0;
+}

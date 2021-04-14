@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main () {
+
+	char vect[11];
+	cin >> vect;
+	int len = strlen(vect);
+
+	int dat[100] = { 0 };
+
+	for (int i = 0; i < len; i++) {
+		dat[vect[i]]++;
+	}
+
+	for (int x = 0; x < 100; x++) {
+		if (dat[x] > 0) {
+			cout << (char)(x);
+		}
+	}
+
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	char name[10];
+	int bucket[200] = { 0 };
+	int x;
+
+	cin >> name;
+
+	int len;
+	for (x = 0; x < 10; x++)
+	{
+		if (name[x] == '\0')
+		{
+			len = x;
+			break;
+		}
+	}
+
+	for (x = 0; x < len; x++)
+	{
+		bucket[name[x]] = 1;
+	}
+
+	for (x = 0; x < 200; x++)
+	{
+		if (bucket[x] == 1)
+		{
+			cout << (char)(x);
+		}
+	}
+}

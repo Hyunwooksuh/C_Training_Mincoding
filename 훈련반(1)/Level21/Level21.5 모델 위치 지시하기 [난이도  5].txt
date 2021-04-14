@@ -1,0 +1,150 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char vect[5][4] = {
+	"___",
+	"___",
+	"ATK",
+	"___",
+	"___",
+};
+
+int main() {
+
+	char model[7];
+	char move[7][6];
+
+	int dya = 2, dxa = 0;
+	int dyb = 2, dxb = 1;
+	int dyc = 2, dxc = 2;
+
+
+	for (int i = 0; i < 7; i++) {
+		cin >> model[i] >> move[i];
+
+		if (strcmp(move[i], "UP") == 0) {
+			if (model[i] == 'A') {
+				dya--;
+			} else if (model[i] == 'T') {
+				dyb--;
+			} else if (model[i] == 'K') {
+				dyc--;
+			}
+		} else if (strcmp(move[i], "DOWN") == 0) {
+			if (model[i] == 'A') {
+				dya++;
+			}
+			else if (model[i] == 'T') {
+				dyb++;
+			}
+			else if (model[i] == 'K') {
+				dyc++;
+			}
+		}
+		else if (strcmp(move[i], "RIGHT") == 0) {
+			if (model[i] == 'A') {
+				dxa++;
+			}
+			else if (model[i] == 'T') {
+				dxb++;
+			}
+			else if (model[i] == 'K') {
+				dxc++;
+			}
+		}
+		else if (strcmp(move[i], "LEFT") == 0) {
+			if (model[i] == 'A') {
+				dxa--;
+			}
+			else if (model[i] == 'T') {
+				dxb--;
+			}
+			else if (model[i] == 'K') {
+				dxc--;
+			}
+		}
+	}
+
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 3; x++) {
+			vect[y][x] = '_';
+		}
+	}
+	vect[dya][dxa] = 'A';
+	vect[dyb][dxb] = 'T';
+	vect[dyc][dxc] = 'K';
+
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 3; x++) {
+			cout << vect[y][x];
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+	int Ay = 2, Ax = 0;
+	int Ty = 2, Tx = 1;
+	int Ky = 2, Kx = 2;
+
+	char target;
+	char command[10];
+
+	for (int i = 0; i < 7; i++)
+	{
+		cin >> target >> command;
+		
+		if (target == 'A')
+		{
+			if (strcmp(command, "UP") == 0) Ay--;
+			if (strcmp(command, "DOWN") == 0) Ay++;
+			if (strcmp(command, "LEFT") == 0) Ax--;
+			if (strcmp(command, "RIGHT") == 0) Ax++;
+		}
+
+		if (target == 'T')
+		{
+			if (strcmp(command, "UP") == 0) Ty--;
+			if (strcmp(command, "DOWN") == 0) Ty++;
+			if (strcmp(command, "LEFT") == 0) Tx--;
+			if (strcmp(command, "RIGHT") == 0) Tx++;
+		}
+
+		if (target == 'K')
+		{
+			if (strcmp(command, "UP") == 0) Ky--;
+			if (strcmp(command, "DOWN") == 0) Ky++;
+			if (strcmp(command, "LEFT") == 0) Kx--;
+			if (strcmp(command, "RIGHT") == 0) Kx++;
+		}
+	}
+
+	int x, y;
+	char map[5][3] = { 0 };
+
+	map[Ay][Ax] = 'A';
+	map[Ty][Tx] = 'T';
+	map[Ky][Kx] = 'K';
+
+	for (y = 0; y < 5; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			if (map[y][x] == 0) cout << "_";
+			else cout << map[y][x];
+		}
+		cout << endl;
+	}
+
+	return 0;
+}

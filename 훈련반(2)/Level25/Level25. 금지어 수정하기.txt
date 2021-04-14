@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main() {
+	string str;
+	cin >> str;
+
+	string b[5] = {
+		"KFC","MC","BICMAC","SHACK","SONY"
+	};
+	string a[5] = {
+		"#BBQ#", "#BBQ#","#MACBOOK#","#SHOCK#","#NONY#"	};
+	
+
+	for (int i = 0; i < 5; i++) {
+		int ret = str.find(b[i]);
+		if (ret == -1) continue;
+		str.erase(ret, b[i].length());
+		str.insert(ret, a[i]);
+	}
+	cout << str;
+
+
+}
+
+-----------------------------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string ori[5] = { "KFC", "MC", "BICMAC", "SHACK", "SONY" };
+string tar[5] = { "#BBQ#", "#BBQ#", "#MACBOOK#", "#SHOCK#", "#NONY#" };
+
+string str;
+
+void replace(string da, string db)
+{
+	int a = 0;
+	int b;
+	
+	while (1) {
+		a = str.find(da, a);
+		if (a == -1) break;
+		str.erase(a, da.length());
+		str.insert(a, db);
+		a += db.length();
+	}
+}
+
+int main()
+{
+	cin >> str;
+
+	for (int i = 0; i < 5; i++) {
+		replace(ori[i], tar[i]);
+	}
+
+	cout << str;
+
+	return 0;
+}

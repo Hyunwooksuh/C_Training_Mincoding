@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main() {
+	char A[11], B[11], C[11];
+	cin >> A >> B >> C;
+	
+	int lenA = strlen(A);
+	int lenB = strlen(B);
+	int lenC = strlen(C);
+	char temp[11];
+
+	if ((lenB > lenC) && (lenB > lenA)) {		
+		strcpy(temp, B);
+		strcpy(B, A);
+		strcpy(A, temp);
+		cout << A << '\n' << B << '\n' << C;
+	} else if ((lenC > lenA) && (lenC > lenB)) {
+		strcpy(temp, C);
+		strcpy(C, A);
+		strcpy(A, temp);
+		cout << A << '\n' << B << '\n' << C;
+	}
+	else if ((lenA > lenB) && (lenA > lenC)) {
+		cout << A << '\n' << B << '\n' << C;
+	}
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+	char vect[3][11];
+	int len;
+	int max;
+	int maxIndex;
+
+	//세 문장 입력
+	for (int i = 0; i < 3; i++)
+	{
+		cin >> vect[i];
+	}
+	
+	//가장 긴 문장 찾기
+	max = -1;
+	for (int i = 0; i < 3; i++)
+	{
+		len = strlen(vect[i]);
+		if (max < len)
+		{
+			max = len;
+			maxIndex = i;
+		}
+	}
+
+	//swap(vect[maxIndex], vect[0]);
+	char temp[11];
+
+	strcpy(temp, vect[maxIndex]);
+	strcpy(vect[maxIndex], vect[0]);
+	strcpy(vect[0], temp);
+
+
+	//출력
+	for (int i = 0; i < 3; i++)
+	{
+		cout << vect[i] << endl;
+	}
+
+	return 0;
+}

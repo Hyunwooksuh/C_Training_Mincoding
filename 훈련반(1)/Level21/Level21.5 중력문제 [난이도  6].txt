@@ -1,0 +1,103 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main() {
+	char vect[4][4];
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	for (int y = 3; y >= 0; y--) {
+		for (int x = 0; x < 3; x++) {
+			int t = 3;
+			if (vect[y][x] != '_') {
+				if (vect[t][x] == '_') {
+					int temp = vect[y][x];
+					vect[y][x] = vect[t][x];
+					vect[t][x] = temp;
+				}
+				else if (vect[t][x] != '_') {
+
+					while (1) {
+
+						t--;
+						if (vect[t][x] == '_') {
+							int temp = vect[y][x];
+							vect[y][x] = vect[t][x];
+							vect[t][x] = temp;
+							break;
+						}
+					}
+
+				}
+			}
+
+
+		}
+	}
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 3; x++) {
+			cout << vect[y][x];
+		}
+		cout << endl;
+	}
+
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+using namespace std;
+
+char vect[4][4];
+
+void drop(int line)
+{
+	int flag;
+
+	//맨 밑칸에서 맨 위까지 탐색
+	for (int y = 3; y >= 0; y--)
+	{	
+		if (vect[y][line] == '_')
+		{
+			flag = 0;
+			for (int t = y - 1; t >= 0; t--)
+			{
+				if (vect[t][line] != '_')
+				{
+					vect[y][line] = vect[t][line];
+					vect[t][line] = '_';
+					flag = 1;
+					break;
+				}
+			}
+
+			//떨어뜨릴 문자가 없다면 break 
+			if (flag == 0) break;
+		}
+	}
+}
+
+int main()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		cin >> vect[i];
+	}
+
+	drop(0); //x==0 Drop
+	drop(1); //x==1 Drop
+	drop(2); //x==2 Drop
+
+	for (int i = 0; i < 4; i++)
+	{
+		cout << vect[i] << endl;
+	}
+
+	return 0;
+}

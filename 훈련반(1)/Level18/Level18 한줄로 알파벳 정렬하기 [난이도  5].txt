@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main() {
+	char vect[5][4] = {
+		"ABC",
+		"AGH",
+		"HIJ",
+		"KAB",
+		"ABC",
+	};
+
+	int dat[100] = { 0 };
+	
+	for (int y = 0; y < 5; y++) {
+		for (int x = 0; x < 3; x++) {
+			dat[vect[y][x]]++;
+		}
+	}
+	for (int i = 0; i < 100; i++) {
+
+		for (int x = 0; x < dat[i]; x++) {
+			cout << (char)(i);
+		}
+
+	}
+	return 0;
+}

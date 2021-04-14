@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char path[10];
+char name[5] = "BGTK";
+int n;
+void run(int level) {
+
+	if (level == n) {
+		cout << path << '\n';
+		return;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		path[level] = name[i];
+		run(level + 1);
+		path[level] = 0;
+	}
+
+}
+int main() {
+
+	cin >> n;
+	run(0);
+
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+
+char path[10];
+char name[10] = "BGTK";
+int n;
+
+void run(int level)
+{
+	if (level == n)
+	{
+		cout << path << endl;
+		return;
+	}
+
+	for (int x = 0; x < 4; x++)
+	{
+		path[level] = name[x];
+		run(level + 1);
+		path[level] = 0;
+	}
+
+}
+
+int main()
+{
+	cin >> n;
+	run(0);
+
+	return 0;
+}

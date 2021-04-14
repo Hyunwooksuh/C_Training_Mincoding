@@ -1,0 +1,89 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main () {
+
+	char arr1[10], arr2[10], arr3[10];
+	cin >> arr1 >> arr2 >> arr3;
+	int length[3] = { 0 };
+	length[0] = strlen(arr1);
+	length[1] = strlen(arr2);
+	length[2] = strlen(arr3);
+
+	int dat[100] = { 0 };
+	for (int i = 0; i < length[0]; i++) {
+		dat[arr1[i]] ++;
+	}
+	for (int i = 0; i < length[1]; i++) {
+		dat[arr2[i]] ++;
+	}
+	for (int i = 0; i < length[2]; i++) {
+		dat[arr3[i]] ++;
+	}
+
+	int flag = 0;
+	for (int i = 0; i < 100; i++) {
+		if (dat[i] >= 2) {
+			flag++;
+			break;
+		} 
+	}
+	if (flag == 1) cout << "No";
+	else cout << "Perfect";
+
+	int max = 0;
+	return 0;
+}
+----------------------------------------------------------------------
+선생님 풀이
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	char vect[3][10] = { 0 };
+
+	int bucket[200] = { 0 };
+	int x, y;
+	int len;
+
+	for (x = 0; x < 3; x++)
+	{
+		cin >> vect[x];
+	}
+
+	for (y = 0; y < 3; y++)
+	{
+		//문장길이 구하기
+		for (x = 0; x < 10; x++)
+		{
+			if (vect[y][x] == '\0')
+			{
+				len = x;
+				break;
+			}
+		}
+
+		//문장 길이만큼 bucket에 값 채우기
+		for (x = 0; x < len; x++)
+		{
+			bucket[vect[y][x]]++;
+		}
+	}
+
+	//출력하기
+	int flag = 0;
+	for (y = 0; y < 200; y++)
+	{
+		if (bucket[y] >= 2)
+		{
+			flag = 1;
+			break;
+		}
+	}
+
+	if (flag == 0) cout << "Perfect";
+	else cout << "No";
+}
