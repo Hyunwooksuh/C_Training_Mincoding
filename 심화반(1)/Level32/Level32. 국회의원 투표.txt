@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+struct Node {
+    int pick;
+    string name;
+};
+int main()
+{
+    int cdd;
+    int cit;
+    cin >> cdd >> cit;
+    Node citizen[50];
+
+    for (int i = 0; i < cit; i++) {
+        cin >> citizen[i].pick >> citizen[i].name;
+    }
+
+    //1. 뽑힌 사람 찾기
+    int max = 0;
+    int maxidx = 0;
+    for (int i = 0; i < cdd; i++) {
+        
+        int cnt = 0;
+        for (int x = 0; x < cit; x++) {
+            if (citizen[x].pick == i) cnt++;
+        }
+        if (cnt > max) {
+            max = cnt;
+            maxidx = i;
+        }
+    }
+    for (int i = 0; i < cit; i++) {
+        if (citizen[i].pick == maxidx) {
+            cout << citizen[i].name << " ";
+        }
+    }
+    return 0;
+}
+--------------------------------------------------------
+선생님 풀이(DAT 사용)
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+vector<string> line[110];
+int bucket[110];
+
+int main()
+{
+	int n, k;
+	cin >> n >> k;
+
+	int a;
+	int maxIndex;
+	string name;
+	for (int i = 0; i < k; i++) {
+		cin >> a >> name;
+		line[a].push_back(name);
+		
+		bucket[a]++;
+		if (bucket[maxIndex] < bucket[a]) {
+			maxIndex = a;
+		}
+	}
+
+	int ln = line[maxIndex].size();
+	for (int i = 0; i < ln; i++) {
+		cout << line[maxIndex][i] << " ";
+	}
+
+	return 0;
+}

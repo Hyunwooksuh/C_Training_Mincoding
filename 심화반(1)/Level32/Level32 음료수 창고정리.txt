@@ -1,0 +1,30 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+using namespace std;
+int main() {
+
+	string str[5];
+	vector<vector<int>> vect(5);
+	int n1, n2;
+	for (int i = 0; i<5; i++) {
+		cin >> str[i];
+	}
+	cin >> n1 >> n2;
+	for (int y = 0; y<5; y++) {
+		for (int x = 0; x < str[y].size(); x++) {
+			int temp = str[y][x] - '0';
+			vect[y].push_back(temp);
+		}
+	}
+
+	sort(vect[n1].begin(), vect[n1].end());
+	sort(vect[n2].begin(), vect[n2].end());
+
+	for (int y = 0; y<5; y++) {
+		cout << vect[y][0] << " ";
+	}
+
+	return 0;
+}
