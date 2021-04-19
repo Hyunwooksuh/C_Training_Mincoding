@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int vect[4][8];
+    for (int y = 0; y < 4; y++) {
+        for (int x = 0; x < 8; x++) {
+            cin >> vect[y][x];
+        }
+    }
+
+    int sum = 0;
+    for (int y = 0; y < 4; y++) {
+        int flag = 0;
+        for (int x = 0; x < 8; x++) {
+            if (vect[y][x] == 0) {
+                flag++;
+                break;
+            }
+        }
+        if (flag == 1) continue;
+        else {
+            for (int x = 0; x < 8; x++) {
+                sum += vect[y][x];
+            }
+        }
+    }
+    cout << sum;
+    return 0;
+}
+

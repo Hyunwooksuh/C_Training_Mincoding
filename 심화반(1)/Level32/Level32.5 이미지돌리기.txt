@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <string.h>
+#include <algorithm>
+using namespace std;
+int vect[10][10];
+int temp[10][10];
+int n;
+void spin(int y, int x) {
+  //vect[0][0] -> vect[0][4]
+  //vect[0][1] -> vect[1][4]
+  //vect[0][2] -> vect[2][4]
+  //vect[1][0] -> vect[0][3]
+  //vect[1][1] -> vect[1][3]
+  //vect[1][2] -> vect[2][3]
+
+    temp[x][n-1- y] = vect[y][x];
+
+}
+int main()
+{
+    int k;
+    cin >> n >> k;
+    for (int y = 0; y < n; y++) {
+        for (int x = 0; x < n; x++) {
+            cin >> vect[y][x];
+        }
+    }
+
+    
+    for (int t = 0; t < k; t++) {
+        for (int y = 0; y < n; y++) {
+            for (int x = 0; x < n; x++) {
+                spin(y, x);
+            }
+        }
+        memcpy(vect, temp, 4 * 10 * 10);
+    }
+
+    for (int y = 0; y < n; y++) {
+       for (int x = 0; x < n; x++) {
+           cout << temp[y][x] << " ";
+       }
+       cout << '\n';
+    }
+
+
+    return 0;
+}
+

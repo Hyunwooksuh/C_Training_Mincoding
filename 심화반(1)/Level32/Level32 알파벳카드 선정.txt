@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int bucket[100] = { 0 };
+    string arr;
+    int n;
+    cin >> arr >> n;
+    sort(arr.begin(), arr.end(), greater<char>());
+
+    for (int i = 0; i < n; i++) {
+        bucket[arr[i]]++;
+    }
+    int max = 0;
+    int maxidx;
+    for (int i = 0; i < 100; i++) {
+
+        if (bucket > 0) {
+            if (bucket[i] > max) {
+                max = bucket[i];
+                maxidx = i;
+            }
+        }
+    }
+    cout << (char)(maxidx);
+    return 0;
+}
+

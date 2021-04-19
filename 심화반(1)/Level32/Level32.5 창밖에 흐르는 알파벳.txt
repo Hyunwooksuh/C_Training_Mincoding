@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    string str;
+    cin >> str;
+
+    while (1) {
+
+        cout << str;
+        cout << '\n';
+        int flag = 0;
+        for (int i = 0; i < str.size(); i++) {
+            if (str[i] >= 'A' && str[i] <= 'Z') flag++;
+        }
+        if (flag == 0) break;
+
+        for (int i = 0; i < str.size(); i++) {
+            str[i] = str[i] - 1;
+            if (!(str[i] >='A' && str[i] <='Z')) str[i] = '_';
+        }
+
+    }
+    return 0;
+}
+

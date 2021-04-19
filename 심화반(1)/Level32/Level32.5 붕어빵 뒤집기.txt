@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+char vect[3][7] = {
+    "ABCEFG",
+    "HIJKLM",
+    "NOPQRS",
+};
+char temp[3][7];
+int direct[5][2] = {
+    //위, 아래, 왼쪽, 오른쪽
+    0,0,
+    -1,0,
+    1,0,
+    0,-1,
+    0,1,
+};
+void convert(int dy, int dx) {
+
+    for (int i = 0; i < 5; i++) {
+
+        int ny = dy + direct[i][0];
+        int nx = dx + direct[i][1];
+        if (ny < 0 || nx < 0 || ny > 2 || nx > 5) continue;
+        if (vect[ny][nx] >= 'A' && vect[ny][nx] <= 'Z') {
+            temp[ny][nx] = vect[ny][nx];
+            vect[ny][nx] = '#';
+        }
+        else vect[ny][nx] = temp[ny][nx];
+    }
+
+
+}
+int main()
+{
+   string str;
+   cin >> str;
+    for (int i = 0; i < str.size(); i++) {
+        int flag = 0;
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 6; x++) {
+                if (vect[y][x] == str[i]) {
+                    convert(y, x);
+                    flag++;
+                    break;
+                }
+            }
+            if (flag == 1) break;
+        }
+    }
+
+    for (int y = 0; y < 3; y++) {
+        for (int x = 0; x < 6; x++) {
+            cout << vect[y][x];
+        }
+        cout << '\n';
+    }
+    return 0;
+}
+

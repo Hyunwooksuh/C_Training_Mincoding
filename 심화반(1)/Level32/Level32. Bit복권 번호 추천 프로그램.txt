@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int vect[10][10] = { 0 };
+    int mask[10][10] = { 0 };
+    int result[20] = { 0 };
+    int n;
+    cin >> n;
+    for (int y = 0; y < n; y++) {
+        for (int x = 0; x < n; x++) {
+            cin >> vect[y][x];
+        }
+    }
+    for (int y = 0; y < n; y++) {
+        for (int x = 0; x < n; x++) {
+            cin >> mask[y][x];
+        }
+    }
+
+    //1. 추출해서 result 배열에 넣기
+    int t = 0;
+    for (int y = 0; y < n; y++) {
+        for (int x = 0; x < n; x++) {
+            if (mask[y][x] == 1) result[t++] = vect[y][x];
+        }
+    }
+
+    //2. 우선순위 : max 값
+    int bucket[10] = { 0 };
+    for (int i = 0; i < t; i++) {
+        bucket[result[i]]++;
+    }
+    int max = 0;
+    for (int i = 0; i < 10; i++) {
+        if (bucket[i] > 0) {
+            if (bucket[i] > max) {
+                max = bucket[i];
+            }
+        }
+    }
+
+    return 0;
+}
+
