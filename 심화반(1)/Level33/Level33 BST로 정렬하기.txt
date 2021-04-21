@@ -1,0 +1,79 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int bst[100];
+void insert(int value) {
+    int now = 1;
+    while (1) {
+        if (bst[now] == 0) {
+            bst[now] = value;
+            return;
+        }
+        if (bst[now] < value) {
+            now = now * 2 + 1;
+        }
+        else {
+            now = now * 2;
+        }
+    }
+}
+void sort() {
+
+
+
+}
+int main()
+{
+    for (int i = 0; i < 6; i++) {
+        int num;
+        cin >> num;
+        insert(num);
+    }
+    sort(bst, bst+100);
+    for (int i = 0; i < 100; i++) {
+        if (bst[i] > 0) cout << bst[i] << " ";
+    }
+
+    return 0;
+}
+-------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+using namespace std;
+
+int vect[100];
+
+void insert(int x) {
+	int now = 1;
+	while (1) {
+		if (vect[now] == 0) {
+			vect[now] = x;
+			return;
+		}
+
+		if (vect[now] > x) now = now * 2;
+		else now = now * 2 + 1;
+	}
+}
+
+void dfs(int now) {
+	if (vect[now] == 0) return;
+
+	dfs(now * 2);
+	cout << vect[now] << " ";
+	dfs(now * 2 + 1);
+}
+
+int main() {
+	for (int i = 0; i < 6; i++) {
+		int n;
+		cin >> n;
+		insert(n);
+	}
+
+	dfs(1);
+
+	return 0;
+}

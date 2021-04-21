@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+int bst[100];
+void insert(int value) {
+
+    int now = 1;
+    while (1) {
+        if (bst[now] == 0) {
+            bst[now] = value;
+            return;
+        }
+        if (bst[now] < value) {
+            now = now * 2 +1;
+        }
+        else {
+            now = now * 2;
+        }
+    }
+
+}
+void search(int value) {
+
+    int cnt = 1;
+    int now = 1;
+
+    while (1) {
+
+        if (bst[now] == value) {
+            cout << value << ":" << cnt << "회만에찾음" << '\n';
+            return;
+        }
+        if (bst[now] == 0 || now >= 100) {
+            cout << value << ":없음" << '\n';
+            return;
+        }
+        
+        if (bst[now] < value) {
+            now = now * 2 + 1;
+            cnt++;
+        }
+        else {
+            now = now * 2;
+            cnt++;
+        }
+
+    }
+
+}
+
+
+int main()
+{
+    insert(15);
+    insert(7);
+    insert(19);
+    insert(8);
+    insert(17);
+    insert(25);
+    insert(16);
+    insert(18);
+    
+    for (int i = 0; i < 5; i++) {
+        int num;
+        cin >> num;
+        search(num);
+    }
+
+    return 0;
+}
