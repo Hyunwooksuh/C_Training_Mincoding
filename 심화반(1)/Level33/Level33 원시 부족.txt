@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+char vect[100];
+int groupCnt;
+
+char getBoss(char tar) {
+    if (vect[tar] == 0) return tar;
+    char ret = getBoss(vect[tar]);
+    vect[tar] = ret;
+    return ret;
+}
+void setUnion(char t1, char t2) {
+    char a = getBoss(t1);
+    char b = getBoss(t2);
+    if (a == b) return;
+    vect[b] = a;
+    groupCnt--;
+}
+
+int main()
+{
+    setUnion('A', 'B');
+    setUnion('A', 'C');
+    setUnion('D', 'E');
+    setUnion('D', 'F');
+    setUnion('G', 'H');
+    setUnion('I', 'J');
+    groupCnt = 4;
+
+    int k;
+    cin >> k;
+    for (int i = 0; i < k; i++) {
+        char t1, t2;
+        cin >> t1 >> t2;
+        setUnion(t1, t2);
+    }
+
+    cout << groupCnt << "개";
+   
+    return 0;
+}

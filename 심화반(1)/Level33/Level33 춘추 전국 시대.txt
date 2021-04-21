@@ -1,0 +1,145 @@
+#include <iostream>
+using namespace std;
+char vect[100];
+int popul[100];
+int n;
+
+char getBoss(char tar) {
+    if (vect[tar] == 0) return tar;
+    char ret = getBoss(vect[tar]);
+    vect[tar] = ret;
+    return ret;
+}
+
+void setUnion(char t1, char t2) {
+    char a = getBoss(t1);
+    char b = getBoss(t2);
+    if (a == b) return;
+    vect[b] = a;
+}
+void Compare(char t1, char t2) {
+    char a = getBoss(t1);
+    char b = getBoss(t2);
+    int aSum = 0, bSum = 0;
+    int aNum = 0, bNum = 0;
+    for (int i = 0; i < 100; i++) {
+        if (vect[i] > 0) {
+            if (getBoss(vect[i]) == a) {
+                aSum += popul[i];
+                aNum++;
+            }
+            else if (getBoss(vect[i]) == b) {
+                bSum += popul[i];
+                bNum++;
+            }
+        }
+    }
+    if (aSum > bSum) n -= (bNum+1);
+    else if (bSum > aSum) n -= (aNum+1);
+}
+
+int main()
+{
+    cin >> n;
+    for (int t = 65; t < 65 + n; t++) {
+        cin >> popul[t];
+    }
+    int k;
+    cin >> k;
+    for (int i = 0; i < k; i++) {
+        string event;
+        char a, b;
+        cin >> event >> a >> b;
+        if (event == "alliance") {
+            setUnion(a, b);
+        }
+        else if (event == "war") {
+            Compare(a, b);
+        }
+    }
+    
+    cout << n;
+    
+
+    return 0;
+}
+-------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <string>
+using namespace std;
+
+char vect[100];
+int perCnt[100];
+int nationCnt[100];
+int isDie[100];
+int n;
+
+char uFind(char ch) {
+	if (vect[ch] == 0) return ch;
+	char ret = uFind(vect[ch]);
+	vect[ch] = ret;
+	return ret;
+}
+
+void uUnion(char t1, char t2) {
+	char a = uFind(t1);
+	char b = uFind(t2);
+	if (isDie[t1] == 1 || isDie[t2] == 1) return;
+	if (a == b) return;
+
+	vect[b] = a;
+	perCnt[a] += perCnt[b];
+	nationCnt[a] += nationCnt[b];
+	perCnt[b] = 0;
+	nationCnt[b] = 0;
+}
+
+void war(char t1, char t2) {
+	char a = uFind(t1);
+	char b = uFind(t2);
+	if (isDie[t1] == 1 || isDie[t2] == 1) return;
+	if (a == b) return;
+
+	if (perCnt[a] > perCnt[b]) {
+		isDie[b] = 1;
+		n -= nationCnt[b];
+		perCnt[b] = 0;
+		nationCnt[b] = 0;
+	}
+	else {
+		isDie[a] = 1;
+		n -= nationCnt[a];
+		perCnt[a] = 0;
+		nationCnt[a] = 0;
+	}
+}
+
+int main()
+{
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		char ch = 'A' + i;
+		nationCnt[ch] = 1;
+		cin >> perCnt[ch];
+	}
+
+	int t;
+	cin >> t;
+
+	string cmd;
+	char a, b;
+	for (int i = 0; i < t; i++) {
+		cin >> cmd >> a >> b;
+		if (cmd == "alliance") {
+			uUnion(a, b);
+		}
+		if (cmd == "war") {
+			war(a, b);
+		}
+	}
+	
+	cout << n;
+
+	return 0;
+}

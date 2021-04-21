@@ -1,0 +1,53 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+char arr[100];
+char ch[10] = "ABCDEFGHI";
+
+char getBoss(char tar) {
+    if (arr[tar] == 0) return tar;
+    char ret = getBoss(arr[tar]);
+    arr[tar] = ret;
+    return ret;
+}
+
+int setUnion (char t1, char t2) {
+
+    char a = getBoss(t1);
+    char b = getBoss(t2);
+    if (a == b) return 1;
+    arr[b] = a;
+
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    int vect[10][10];
+    for (int y = 0; y<n; y++) {
+        for (int x = 0; x<n; x++) {
+            cin >> vect[y][x];
+        }
+    }
+   
+
+    for (int y = 0; y<n; y++) {
+        for (int x = y; x<n;x++) {
+            if (vect[y][x] == 1) {
+                int ret = setUnion(ch[y], ch[x]);
+                if (ret == 1) {
+                    cout << "cycle 발견";
+                    return 0;
+                }
+            }
+        }
+    }
+    
+    cout << "미발견";
+
+
+
+    return 0;
+}

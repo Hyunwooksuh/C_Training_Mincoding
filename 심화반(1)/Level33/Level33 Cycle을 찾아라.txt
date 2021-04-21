@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+char vect[100] = { 0 };
+char getBoss(char tar) {
+    if (vect[tar] == 0) return tar;
+    char ret = getBoss(vect[tar]);
+    vect[tar] = ret;
+    return ret;
+}
+int setUnion(char t1, char t2) {
+    char a = getBoss(t1);
+    char b = getBoss(t2);
+    if (a == b) return 1;
+    vect[b] = a;
+}
+int main()
+{
+    int n;
+    cin >> n;
+   
+    for (int i = 0; i < n; i++) {
+        char a, b;
+        cin >> a >> b;
+        int ret = setUnion(a, b);
+        if (ret == 1) {
+            cout << "발견";
+            return 0;
+        }
+    }
+    cout << "미발견";
+    return 0;
+}
