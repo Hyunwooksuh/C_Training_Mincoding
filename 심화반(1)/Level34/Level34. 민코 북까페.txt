@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+struct Node {
+	string book;
+	int num;
+};
+string vect[50];
+string tt[50];
+int bookCnt;
+int m;
+Node client[10];
+int compare(string t1, string t2) {
+	for (int i = 0; i < t1.length(); i++) {
+		if (t1[i] > t2[i]) return 0;
+		if (t1[i] < t2[i]) return 1;
+	}
+	return 1;
+}
+int bs(int start, int end, string bookFind) {
+
+	int cnt = 0;
+	while (1) {
+
+		int mid = (start + end) / 2;
+		if (tt[mid] == bookFind) {
+			return cnt;
+		}
+		if (tt[mid] < bookFind) {
+			start = mid + 1;
+		}
+		if (tt[mid] > bookFind) {
+			end = mid - 1;
+		}
+
+		cnt++;
+	}
+}
+int main()
+{
+	cin >> bookCnt;
+	for (int i = 1; i <= bookCnt; i++) {
+		cin >> vect[i];
+		tt[i] = vect[i];
+		for (int x = i; x > 0; x--) {
+			int ret = compare(tt[x-1], tt[x]);
+			if (ret == 0) swap(tt[x-1], tt[x]);
+		}
+	}
+	
+	cin >> m;
+	for (int i = 0; i < m; i++) {
+		cin >> client[i].book >> client[i].num;
+	}
+
+	for (int i = 0; i < m; i++) {
+		string bookFind = client[i].book;
+		int second = client[i].num;
+		int ret = bs(1, bookCnt, bookFind);
+		if (ret < second) cout << "pass" << '\n';
+		else cout << "fail" << '\n';
+	}
+	return 0;
+}

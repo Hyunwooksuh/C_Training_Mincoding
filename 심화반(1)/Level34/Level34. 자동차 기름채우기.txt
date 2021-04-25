@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+char fuel[11];
+int maxi = -1;
+int bs(int start, int end) {
+	while (1) {
+		int mid = (start + end) / 2;
+		if (fuel[mid] == '#' && fuel[mid + 1] == '_') return mid;
+		
+		if (fuel[mid] == '#') start = mid + 1;
+		if (fuel[mid] == '_') end = mid - 1;
+	}
+}
+int main() {
+	cin >> fuel;
+	cout << (bs(0, 9)+1)*10 << '%';
+	
+	return 0;
+}

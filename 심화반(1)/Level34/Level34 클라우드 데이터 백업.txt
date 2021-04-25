@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+int n;
+int maxidx_y, maxidx_x;
+char vect[20][20];
+void bs_sero(int start, int end) {
+
+	while (1) {
+
+		int mid = (start + end) / 2;
+		if (vect[mid][0] == '#' && mid > maxidx_y) maxidx_y = mid;
+
+		if (start == end) return;
+
+		if (vect[mid][0] == '#') start = mid + 1;
+		if (vect[mid][0] == '0') end = mid;
+	}
+
+}
+void bs_garo(int start, int end) {
+		
+
+	while (1) {
+
+		int mid = (start + end) / 2;
+		if (vect[maxidx_y][mid] == '#' && mid > maxidx_x) maxidx_x = mid;
+
+		if (start == end) return;
+
+		if (vect[maxidx_y][mid] == '#') start = mid + 1;
+		if (vect[maxidx_y][mid] == '0') end = mid;
+	}
+
+
+	
+}
+int main()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	bs_sero(0, 7);
+	bs_garo(0, 7);
+	
+	cout << maxidx_y << " " << maxidx_x;
+
+	return 0;
+}
+
