@@ -1,0 +1,59 @@
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
+using namespace std;
+struct Node {
+	int y, x;
+	int value;
+};
+priority_queue<Node> q;
+bool operator<(Node v, Node t) {
+	if (v.value > t.value) return true;
+	if (v.value < t.value) return false;
+	
+	if (v.value == t.value) {
+		if (t.y < v.y) return true;
+		if (t.y > v.y) return false;
+		if (t.y == v.y) return t.x < v.y;
+	}
+}
+
+int main() {
+
+	int n;
+	cin >> n;
+	int map[10][10];
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> map[y][x];
+		}
+	}
+
+
+	for (int y = 0; y < n; y++) {
+		for (int x = y; x < n; x++) {
+			if (map[y][x] > 0) {
+				q.push({ y,x,map[y][x] });
+			}
+		}
+	}
+
+	int i = 0;
+	int ret;
+	while (1) {
+
+		Node tar = q.top();
+		q.pop();
+		tar.value = tar.value * 2;
+		
+		if (i == 10) {
+			ret = tar.value;
+			cout << ret << "만원";
+			break;
+		}
+		q.push({ tar.y, tar.x, tar.value });
+		i++;
+	}
+	return 0;
+}

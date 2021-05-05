@@ -1,0 +1,21 @@
+#include <iostream>
+#include <queue>
+#include <string>
+using namespace std;
+int main() {
+	// str을 아스키코드 상 큰 값부터 출력하는 문제 
+	priority_queue<char> q;
+
+	string str;
+	cin >> str;
+	for (int i = 0; i < str.length(); i++) {
+		q.push(str[i]);
+	}
+	for (int i = 0; i < str.length(); i++) {
+		cout << q.top();
+		q.pop();
+	}
+
+	
+	return 0;
+}
