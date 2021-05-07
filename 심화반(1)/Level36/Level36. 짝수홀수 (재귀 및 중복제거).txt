@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+string num;
+int visited[100];
+int bucket[10000];
+int t = 0;
+char path[10];
+
+int evenCnt;
+int oddCnt;
+//3. 똑같은 수를 세면 안됩니다.
+//-만들어진 네자리 수는, 한번 씩만 세어야 합니다.여러번 세면 안됩니다.
+// 이 조건 해결못하겠음...
+
+void dfs(int level) {
+
+
+	if (level == 4) {
+
+		int ret = stoi(path);
+		if (bucket[ret] == 1) return;
+		bucket[ret]++;
+
+		if (stoi(path) % 2 == 1) oddCnt++;
+		else if (stoi(path) % 2 == 0) evenCnt++;
+		return;
+	}
+
+		//int bucket[10] = { 0 };
+	for (int i = 0; i < 6; i++) {
+
+		if (visited[i] == 1) continue;
+		visited[i] = 1;
+		
+		//int index = num[i] - '0';
+		//if (bucket[index] > 0) continue;
+		//bucket[index]++;
+		
+		path[level] = num[i];
+
+		dfs(level + 1);
+
+		path[level] = 0;
+		visited[i] = 0;
+	}
+
+}
+
+int main()
+{
+	cin >> num;
+	dfs(0);
+	cout << oddCnt + evenCnt << " " << evenCnt << " " << oddCnt;
+
+
+	return 0;
+}
+

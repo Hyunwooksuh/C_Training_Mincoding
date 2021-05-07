@@ -1,0 +1,121 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+struct Node {
+	int start;
+	int length;
+};
+string str[5] = {
+	"chicken",
+	"pizza",
+	"jockbal",
+	"bread",
+	"samhap",
+};
+vector<int> v;
+bool operator<(Node v, Node tar) {
+	return tar.length > v.length;
+}
+priority_queue<Node> q;
+int main()
+{
+	string target;
+	cin >> target;
+	// 1. 1차적으로 모든 대문자를 소문자로 변경함 
+	for (int i = 0; i < target.size(); i++) {
+		if (target[i] >= 'A' && target[i] <= 'Z') {
+			target[i] = target[i] + ('a' - 'A');
+			v.push_back(i);
+		}
+	}
+	//2. 변경한 문장에서 위의 다이어트 텍스트를 모두 저장해둠 (이유: 인덱스 변경 방지)
+	for (int i = 0; i < 5; i++) {
+		string masking = str[i];
+		int start = target.find(str[i], 0);
+		if (start == -1) continue;
+		int len = str[i].length();
+		q.push({ start,len });
+	}
+	//3. 텍스트 저장되었으니, 다시 입력된 문장을 정상복구
+	for (int i = 0; i < v.size(); i++) {
+		target[v[i]] = target[v[i]] - ('a' - 'A');
+	}
+	//4. 이제 샵샵샵으로 대체하기
+	while(!q.empty()) {
+		Node tar = q.top();
+		q.pop();
+		int start = tar.start;
+		int len = tar.length;
+		target.erase(start, len);
+		target.insert(start, "###");
+	}
+
+	cout << target;
+	return 0;
+}
+
+-------------------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <string>
+using namespace std;
+
+string war[5] = { "chicken", "pizza", "jockbal", "bread", "samhap" };
+string vect;
+
+int isSame(string war, int index)
+{
+	for (int i = 0; i < war.length(); i++) {
+		if (war[i] != vect[index + i]) return 0;
+	}
+	return 1;
+}
+
+int check(int index)
+{
+	for (int i = 0; i < 5; i++) {
+		if (index + war[i].length() > vect.length()) continue;
+
+		if (isSame(war[i], index) == 1) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+void changeCh(string& vect)
+{
+	for (int i = 0; i < vect.length(); i++) {
+		if (vect[i] >= 'A' && vect[i] <= 'Z') vect[i] = vect[i] - 'A' + 'a';
+	}
+}
+
+int main()
+{
+	string result;
+	string input;
+	
+	cin >> input;
+	vect = input;
+
+	changeCh(vect); //대소문자 변경
+
+	for (int i = 0; i < vect.length(); i++) {
+		int ret = check(i);
+
+		if (ret == -1) {
+			result += input[i];
+		}
+		else {
+			result += "###";
+			i += war[ret].length() - 1;
+		}
+	}
+
+	cout << result;
+
+	return 0;
+}

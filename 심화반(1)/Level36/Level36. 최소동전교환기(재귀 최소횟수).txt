@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+int n;
+int vect[3] = { 60,40,10 };
+int mini = 99;
+void run(int level, int sum, int cnt) {
+
+	if (sum == n) {
+		if (mini > cnt) mini = cnt;
+		return;
+	}
+
+	if (sum > n) return;
+	
+	for (int i = 0; i < 3; i++) {
+		
+		run(level + 1, sum + vect[i], cnt + 1);
+	}
+}
+
+int main()
+{
+	cin >> n;
+	run(0,0,0);
+	cout << mini;
+
+	return 0;
+}
+

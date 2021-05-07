@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+int vect[20];
+int main()
+{
+	string arr;
+	cin >> arr;
+	
+	int a = 0;
+	int b = 0;
+	while (a < arr.length()) {
+		a = arr.find("#", a);
+		vect[b++] = a;
+		a++;
+	}
+
+	string maxStr = "";
+	for (int i = 0; i <= b-1; i++) {
+		if (vect[i] + 1 == vect[i + 1]) continue;
+		string temp = arr.substr(vect[i] + 1, vect[i + 1] - vect[i] - 1);
+		if (temp.size() > maxStr.size()) maxStr = temp;
+	}
+	cout << maxStr;
+
+	return 0;
+}
+
+---------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+string str;
+vector<string> baem;
+
+void split() {
+	
+	int right = 0;
+	int left = 0;
+	while (1) {
+		right = str.find('#', left);
+		if (right == -1) {
+			baem.push_back(str.substr(left));
+			break;
+		}
+		
+		baem.push_back(str.substr(left, right - left + 1));
+		left = right + 1;
+	}
+
+}
+
+int main() {
+	//str = "#~~~~~~~#~~~~#";
+	cin >> str;
+
+	//1. #을 기준으로 split
+	split();
+
+	//2. ~ 개수 cnt
+	int cnt = 0;
+	int maxCnt = 0;
+	for (int i = 0; i < baem.size(); i++) {
+		cnt = 0;
+		for (int x = 0; x < baem[i].length(); x++) {
+			if (baem[i][x] == '~') cnt++;
+		}
+		if (maxCnt < cnt) maxCnt = cnt;
+	}
+
+	for (int i = 0; i < maxCnt; i++) cout << "~";
+
+	return 0;
+}

@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+int vect[5];
+int path[10];
+int visited[5];
+int maxi = -21e8;
+int mini = 21e8;
+
+void runMin(int level) {
+
+	if (level == 5) {
+		int ret = (path[0] * path[1]) - (path[2] * path[3]) + path[4];
+		if (mini > ret) mini = ret;
+	}
+
+
+	for (int i = 0; i < 5; i++) {
+		if (visited[i] == 1) continue;
+		visited[i] = 1;
+		path[level] = vect[i];
+		runMin(level + 1);
+		path[level] = 0;
+		visited[i] = 0;
+	}
+}
+void runMax(int level) {
+
+	if (level == 5) {
+		int ret = (path[0] * path[1]) - (path[2] * path[3]) + path[4];
+		if (ret > maxi) maxi = ret;
+	}
+
+
+	for (int i = 4; i >=0; i--) {
+		if (visited[i] == 1) continue;
+		visited[i] = 1;
+		path[level] = vect[i];
+		runMax(level + 1);
+		path[level] = 0;
+		visited[i] = 0;
+	}
+}
+
+int main()
+{
+	for (int i = 0; i < 5; i++) {
+		cin >> vect[i];
+	}
+	runMin(0);
+	runMax(0);
+	cout << maxi << '\n' << mini;
+
+
+	return 0;
+}
+

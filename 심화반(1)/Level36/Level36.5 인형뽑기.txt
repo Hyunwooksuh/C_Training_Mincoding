@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+struct Node {
+	int y, x;
+	int type;
+};
+int n;
+int k;
+char map[10][10] = {
+	"AEKXK",
+	"ZOQKP",
+	"CFWLX",
+	"CEIHB",
+	"NEMIO",
+};
+Node point[10];
+int type1[5][2] = {
+	-1,0,
+	0,0,
+	0,-1,
+	0,1,
+	1,0,
+};
+int type2[5][2] = {
+	-1,-1,
+	0,0,
+	-1,1,
+	1,1,
+	1,-1
+};
+void print(int dy, int dx, int type) {
+
+	if (type == 1) {
+		for (int i = 0; i < 5; i++) {
+			int ny = dy + type1[i][0];
+			int nx = dx + type1[i][1];
+			if (ny < 0 || nx < 0 || ny >(n - 1) || nx >(n - 1)) continue;
+			cout << map[ny][nx];
+		}
+		cout << '\n';
+	}
+	else if (type == 2) {
+		for (int i = 0; i < 5; i++) {
+			int ny = dy + type2[i][0];
+			int nx = dx + type2[i][1];
+			if (ny < 0 || nx < 0 || ny > (n-1) || nx > (n-1)) continue;
+			cout << map[ny][nx];
+		}
+		cout << '\n';
+	}
+
+}
+int main()
+{
+	cin >> n >> k;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> map[y][x];
+		}
+	}
+
+	for (int i = 0; i < k; i++) {
+		cin >> point[i].y >> point[i].x >> point[i].type;
+		print(point[i].y, point[i].x, point[i].type);
+	}
+	
+	return 0;
+}
+

@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+string str[5] = { "BTS","SBS","BS","CBS","SES" };
+string tar;
+int mini = 21e8;
+void run(int level, string tarStr) {
+
+	if (tarStr.length() > tar.length()) {
+		return;
+	}
+
+	if (tarStr == tar) {
+		if (mini > level) {
+			mini = level;
+			return;
+		}
+	}
+
+	for (int i = 0; i < 5; i++) {
+		run(level + 1, tarStr + str[i]);
+	}
+	
+}
+int main()
+{
+	cin >> tar;
+	string start = "";
+	run(0, start);
+	cout << mini;
+
+	return 0;
+}
