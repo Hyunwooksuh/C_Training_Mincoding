@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+using namespace std;
+int n;
+int vect[10][10];
+int maxGop = -21e8;
+void dfs(int level, int gop) {
+
+	if (level == n) {
+		if (gop > maxGop) maxGop = gop;
+		return;
+	}
+	
+	for (int i = 0; i < n; i++) {
+		if (vect[level][i] == 0) continue;
+		dfs(level + 1, gop * vect[level][i]);
+	}
+}
+int main () {
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> vect[y][x];
+		}
+	}
+	dfs(0,1);
+	cout << maxGop;
+	return 0;
+}
