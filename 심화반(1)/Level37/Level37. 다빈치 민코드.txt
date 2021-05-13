@@ -1,0 +1,102 @@
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+priority_queue<int, vector<int>, greater<int>> q;
+int path[10];
+int vect[10];
+int ret[10];
+int used[10];
+int n;
+int m;
+int mini = 21e8;
+void dfs(int level, int gop) {
+
+	if (level == m) {
+		if (mini > gop) {
+			mini = gop;
+			for (int i = 0; i < m; i++) {
+				ret[i] = path[i];
+			}
+		}
+		return;
+	}
+
+	for (int i = 0; i < n; i++) {
+		if (used[i] == 1) continue;
+		used[i] = 1;
+		path[level] = vect[i];
+		dfs(level + 1, gop * vect[i]);
+		path[level] = 0;
+		used[i] = 0;
+	}
+}
+
+int main () 
+{
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		cin >> vect[i];
+	}
+	dfs(0, 1);
+	for (int i = 0; i < m; i++) {
+		q.push(ret[i]);
+	}
+	while (!q.empty()) {
+		cout << q.top() << " ";
+		q.pop();
+	}
+
+	return 0;
+}
+
+--------------------------------------
+선생님 풀이(memcpy 및 vector -> sort함수 사용)
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <cstring>
+using namespace std;
+
+vector<int> deck;
+int n, m;
+int minGop = 21e8;
+
+int path[100];
+int minPath[100];
+
+void back(int level, int start, int gop) {
+	if (level == m) {
+		if (minGop > gop) {
+			minGop = gop;
+			memcpy(minPath, path, 100 * 4); //int : 4 Byte x 100칸
+		}
+		return;
+	}
+
+	for (int i = start; i < n; i++) {
+		path[level] = deck[i];
+		back(level + 1, i + 1, gop * deck[i]);
+		path[level] = 0;
+	}
+}
+
+int main() {
+	cin >> n >> m;
+
+	for (int i = 0; i < n; i++) {
+		int a;
+		cin >> a;
+		deck.push_back(a);
+	}
+
+	sort(deck.begin(), deck.end());
+
+	back(0, 0, 1);
+
+	for (int i = 0; i < m; i++) {
+		cout << minPath[i] << " ";
+	}
+
+	return 0;
+}
