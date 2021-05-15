@@ -1,0 +1,40 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int n;
+int vect[10][10];
+int direct[4][2] = { -1,0,0,1,0,-1,1,0 };
+int used[20][20] = { 0 };
+int flag = 0;
+void dfs(int level, int dy, int dx) {
+
+	if (dy == n - 1 && dx == n - 1) {
+		flag++;
+		return;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		int ny = dy + direct[i][0];
+		int nx = dx + direct[i][1];
+		if (ny < 0 || nx < 0 || nx >= n || ny >= n) continue;
+		if (vect[ny][nx] == 1) continue;
+		if (used[ny][nx] == 1) continue;
+		used[ny][nx] = 1;
+		dfs(level + 1, ny, nx);
+	}
+}
+int main()
+{
+    cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> vect[y][x];
+		}
+	}
+	used[0][0] = 1;
+	dfs(0,0,0);
+	if (flag == 1) cout << "가능";
+	else cout << "불가능";
+
+	return 0;
+}

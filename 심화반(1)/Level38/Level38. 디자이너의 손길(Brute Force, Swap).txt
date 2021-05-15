@@ -1,0 +1,133 @@
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+#include <queue>
+using namespace std;
+struct Node {
+    int y, x;
+};
+int n;
+string str;
+char path[10];
+int path2[10];
+Node arr[100];
+int t;
+
+int maxi = -21e8;
+int estimate() {
+
+    int sum = 0;
+    for (int i = 0; i <= str.length()-2; i++) {
+        if (str[i] == str[i + 1]) sum = sum - 50;
+        else {
+            if (abs(str[i] - str[i + 1]) <= 5) sum = sum + 3;
+            else if (abs(str[i] - str[i + 1]) >= 20) sum = sum + 10;
+        } 
+    }
+    return sum;
+
+}
+void back(int level, int start) {
+
+    if (level == 2) {
+        arr[t].y = path[0];
+        arr[t].x = path[1];
+        t++;
+        return;
+    }
+
+    for (int i = start; i < str.length(); i++) {
+        path[level] = i;
+        back(level + 1, i + 1);
+        path[level] = 0;
+    }
+
+}
+void select(int level, int start) {
+    int a, b;
+    if (level == n) {
+        string temp = str;
+        for (int i = 0; i < n; i++) {
+            int turn = path2[i];
+            a = arr[turn].y;
+            b = arr[turn].x;
+            swap(str[a], str[b]);
+        }
+        int ret = estimate();
+        if (ret > maxi) maxi = ret;
+        str = temp;
+        return;
+    }
+
+    for (int i = start; i < t - 1; i++) {
+        path2[level] = i;
+        select(level + 1, i + 1);
+        path2[level] = 0;
+    }
+}
+
+int main()
+{
+    cin >> str >> n;
+    back(0, 0);
+
+    select(0, 0);
+    cout << maxi;
+
+    
+    return 0;
+}
+------------------------------------------------------
+선생님 풀이 (애초에 재귀돌리기전에 swap하고 돌리기)
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char str[100];
+int n;
+
+int maxi;
+int limit;
+
+int calc() {
+	int sum = 0;
+	for (int i = 1; i < n; i++) {
+		char ca = str[i - 1];
+		char cb = str[i];
+
+		if (ca == cb) sum -= 50;
+		if (abs(ca - cb) <= 5) sum += 3;
+		if (abs(ca - cb) >= 20) sum += 10;
+	}
+
+	return sum;
+}
+
+void run(int level) {
+	if (level == limit) {
+		int ret = calc();		
+		if (maxi <= ret) maxi = ret;
+		return;
+	}
+
+	for (int a = 0; a < n - 1; a++) {
+		for (int b = a + 1; b < n; b++) {
+			swap(str[a], str[b]);
+			run(level + 1);
+			swap(str[a], str[b]);
+		}
+	}
+}
+
+int main()
+{
+	cin >> str;
+	cin >> limit;
+
+	n = strlen(str);
+	run(0);
+	cout << maxi;
+
+	return 0;
+}

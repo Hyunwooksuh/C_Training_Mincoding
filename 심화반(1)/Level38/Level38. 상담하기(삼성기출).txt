@@ -1,0 +1,36 @@
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+struct Node {
+    int time;
+    int price;
+};
+int n;
+Node arr[10];
+
+int maxi = -21e8;
+int start = 0;
+void back(int level, int start, int sum) {
+
+    if (start >= n) {
+        if (sum > maxi) maxi = sum;
+        return;
+    }
+
+    for (int i = start; i < n; i++) {
+        back(level + 1, i + arr[i].time, sum + arr[i].price);
+    }
+}
+
+int main()
+{
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i].time >> arr[i].price;
+    }
+    back(0, 0, 0);
+    cout << maxi;
+
+    return 0;
+}
