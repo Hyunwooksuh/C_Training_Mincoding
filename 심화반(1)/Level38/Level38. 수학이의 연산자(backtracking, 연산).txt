@@ -1,0 +1,116 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int n = 3;
+int num[10] = { 1,9,8 };
+string str[10] = { "!!", "#", "$", "&" };
+string path[10];
+int cnt = 0;
+
+int calc(string str, int a, int b) {
+  if (str == "!!") {
+   return (a-b) * (a+b);
+  }
+  else if (str == "#") {
+	  if (a > b) return a;
+	  else return b;
+  }
+  else if (str == "$") {
+	  return a * a - b * b;
+  }
+  else if (str == "&") {
+	  return (a + b) * (a + b);
+  }
+}
+
+void back(int level) {
+
+	if (level == n - 1) {
+		int a = num[0];
+		for (int i = 0; i < n - 1; i++) {
+			int ret = calc(path[i], a, num[i + 1]);
+			a = ret;
+		}
+		if (a == 100) cnt++;
+		return;
+	}
+
+
+	for (int i = 0; i < 4; i++) {
+		path[level] = str[i];
+		back(level + 1);
+		path[level] = "";
+	}
+}
+int main()
+{
+	cin >> n;
+	cin >> num[0] >> num[1] >> num[2];
+	back(0);
+	cout << cnt;
+
+	return 0;
+}
+-------------------------------------------------------------------
+선생님 풀이
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> hang;
+int hn;
+
+int path[100];
+int cnt;
+
+int calc()
+{
+	int a = hang[0];
+	int b = 0;
+	int ret;
+
+	for (int i = 1; i < hn; i++) {
+		b = hang[i];
+		int type = path[i - 1];
+		if (type == 0) ret = (a - b) * (a + b);
+		if (type == 1) {
+			ret = a;
+			if (a < b) ret = b;
+		}
+		if (type == 2) ret = (a * a) - (b * b);
+		if (type == 3) ret = (a + b) * (a + b);
+
+		a = ret;
+	}
+
+	return ret;
+}
+
+void run(int level) {
+
+	if (level == hn - 1) {
+		int ret = calc();
+		if (ret == 100) cnt++;
+		return;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		path[level] = i;
+		run(level + 1);
+		path[level] = 0;
+	}
+}
+
+int main() {
+	cin >> hn;
+	for (int i = 0; i < hn; i++) {
+		int a;
+		cin >> a;
+		hang.push_back(a);
+	}
+
+	run(0);
+	cout << cnt;
+
+	return 0;
+}

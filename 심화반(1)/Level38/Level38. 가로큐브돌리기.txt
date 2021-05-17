@@ -1,0 +1,129 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int n;
+int vect[10][10];
+int maxi = -21e8;
+void flip(int arr, int time) {
+
+	for (int i = 0; i < time; i++) {
+		int temp = vect[arr][0];
+		for (int i = 0; i < n-1; i++) {
+			vect[arr][i] = vect[arr][i + 1];
+		}
+		vect[arr][n-1] = temp;
+	}
+
+}
+
+void back(int level) {
+
+	if (level == n) {
+
+		int gop = 1;
+		for (int x = 0; x < n; x++) {
+			int sum = 0;
+			for (int y = 0; y < n; y++) {
+				sum += vect[y][x];
+			}
+			gop = gop * sum;
+		}
+		if (gop > maxi) maxi = gop;
+		return;
+	}
+
+	int backup[10][10];
+	memcpy(backup, vect, 10 * 10 * 4);
+	for (int i = 0; i <= n-1; i++) {
+		flip(level, i);
+		back(level + 1);
+		memcpy(vect, backup, 10 * 10 * 4);
+	}
+
+}
+
+int main()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> vect[y][x];
+		}
+	}
+	back(0);
+	cout << maxi << "점";
+
+	return 0;
+}
+--------------------------------------------------------------------
+선생님 풀이: 한 라인을 n번 돌리면 원상복구 완료된다.
+-> 첫번째 i에서 0번이므로 그대로, 두번째 i에서 1번 돌림 -> 세번째 i에서 2번돌리게됨
+(즉, flip의 횟수는 넘길 필요가 없음)
+#include <iostream>
+using namespace std;
+
+int map[10][10];
+int n;
+
+int maxValue;
+
+void input()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> map[y][x];
+		}
+	}
+}
+
+void spin(int line)
+{
+	int backup = map[line][n - 1];
+	for (int i = n - 1; i >= 1; i--) {
+		map[line][i] = map[line][i - 1];
+	}
+	map[line][0] = backup;
+}
+
+int cal()
+{
+	int sum[10] = { 0 };
+	int gop = 1;
+
+	for (int x = 0; x < n; x++) {
+		for (int y = 0; y < n; y++) {
+			sum[x] += map[y][x];
+		}
+		gop *= sum[x];
+	}
+
+	return gop;
+}
+
+void run(int level)
+{
+	if (level == n) {
+		int ret = cal();
+		if (ret > maxValue) {
+			maxValue = ret;
+		}
+		return;
+	}
+
+	//한 라인을 n번 돌리면 원상복구 완료된다.
+	for (int i = 0; i < n; i++) {
+		spin(level);
+		run(level + 1);
+	}
+}
+
+int main()
+{
+	input();
+	run(0);
+
+	cout << maxValue << "점";
+
+	return 0;
+}

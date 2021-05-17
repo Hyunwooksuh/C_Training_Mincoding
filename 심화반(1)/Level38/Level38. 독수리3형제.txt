@@ -1,0 +1,117 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int n;
+int vect[10];
+int path[10] = { 0 };
+int maxi = -21e8;
+void dfs(int level, int sum) {
+
+	if (level > 0 && level % 3 == 0) {
+		for (int i = 0; i < 10; i++) {
+			if (vect[i] > 0) vect[i] = vect[i] * 2;
+		}
+	}
+
+
+	if (level == n * 3) {
+		int sum = 0;
+		for (int i = 0; i < level; i++) {
+			sum = sum + path[i];
+		}
+		if (sum > maxi) maxi = sum;
+		return;
+	}
+
+	int backup[10];
+	memcpy(backup, vect, 10 * 4);
+	for (int i = 0; i <= 5; i++) {
+		if (level % 3 == 0 && i >= 3) continue;
+		if (level % 3 == 1 && i <= 2) continue;
+		if (level % 3 == 2 && i == 0) continue;
+		if (level % 3 == 2 && i == 5) continue;
+
+		path[level] = vect[i];
+		int eat = vect[i];
+		vect[i] = 0;
+		dfs(level + 1, sum + eat);
+		memcpy(vect, backup, 10 * 4);
+		path[level] = 0;
+	}
+
+}
+int main()
+{
+	for (int i = 0; i < 6; i++) {
+		cin >> vect[i];
+	}
+	cin >> n;
+	dfs(0, 0);
+	cout << maxi;
+
+	return 0;
+}
+교훈: level 조건써놓으면 for문이 넘어가지 않고 초기화됨.. 여기서 개낚임 
+-----------------------------------------------------
+선생님 풀이(재귀함수 안에 3중 포문 돌려주셨음)
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int vect[7] = { 3,7,4,2,6,9 };
+int tCnt = 2;
+int maxi;
+
+void run(int level, int sum) {
+	if (level == tCnt) {
+		if (sum > maxi)
+		{
+			maxi = sum;
+		}
+		return;
+	}
+
+	//증식하기
+	if (level > 0) {
+		for (int i = 0; i < 7; i++) {
+			vect[i] *= 2;
+		}
+	}
+
+	//원본 백업
+	int backup[7];
+	memcpy(backup, vect, 7 * 4);
+
+	for (int a = 0; a <= 2; a++) { //1번 독수리
+		for (int b = 3; b <= 5; b++) { //2번 독수리
+			for (int c = 1; c <= 4; c++) { //3번 독수리
+
+				int hap = vect[a];
+				vect[a] = 0;
+				hap += vect[b];
+				vect[b] = 0;
+				hap += vect[c];
+				vect[c] = 0;
+
+				run(level + 1, sum + hap);
+
+				//원상복구
+				memcpy(vect, backup, 7 * 4);
+			}
+		}
+	}
+}
+
+int main()
+{
+	for (int i = 0; i < 6; i++) {
+		cin >> vect[i];
+	}
+	cin >> tCnt;
+
+	run(0, 0);
+	cout << maxi;
+
+	return 0;
+}
