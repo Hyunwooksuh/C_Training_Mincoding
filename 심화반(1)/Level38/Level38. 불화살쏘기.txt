@@ -1,0 +1,165 @@
+#include <iostream>
+#include <cstring>
+#include <vector>
+using namespace std;
+
+int used[10];
+int n;
+int vect[10];
+int maxi = -21e8;
+int sum;
+int path[10];
+int arr[10];
+
+int isFullyUsed() {
+
+	for (int i = 0; i < n; i++) {
+		if (used[i] == 0) {
+			return 0;
+		}
+	}
+	return 1;
+
+}
+int pathSize() {
+	for (int i = 0; i < 10; i++) {
+		if (path[i] == 0) return i;
+	}
+	return 0;
+}
+void back(int level, int sum) {
+
+	int ret = isFullyUsed();
+	if (ret == 1) {
+		int sum = 0;
+		int size = pathSize();
+		for (int i = 0; i < size; i++) {
+			sum += path[i];
+
+		}
+		if (sum > maxi) {
+			maxi = sum;
+			memcpy(arr, path, 10 * 4);
+		}
+		return;
+	}
+	int temp[10];
+	memcpy(temp, used, 10 * 4);
+	for (int i = 0; i < n; i++) {
+		if (used[i] == 1) continue;
+		used[i] = 1;
+		path[level] = vect[i];
+		int a = i - 1;
+		int b = i + 1;
+		if (a >= 0 && a <= (n-1)) used[a] = 1;
+		if (b >= 0 && b <= (n-1)) used[b] = 1;
+		back(level + 1, sum + vect[i]);
+		memcpy(used, temp, 10 * 4);
+		path[level] = 0;
+	}
+	
+}
+
+int main()
+{
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> vect[i];
+	}
+	back(0, 0);
+
+	int t = 0;
+	for (int i = 0; i < 10; i++) {
+		if (arr[i] == 0) {
+			t = i;
+			break;
+		}
+	}
+
+	for (int i = 0; i < 10; i++) {
+		if (arr[i] == 0) break;
+        if (i == t - 1) cout << arr[i] << "=";
+		else cout << arr[i] << "+";
+	}
+	cout << maxi;
+
+	return 0;
+}
+---------------------------------------------------------------------------
+선생님 풀이 
+#include <iostream>
+using namespace std;
+
+int n;
+int pan[10];
+
+int used[10];
+int history[10];
+
+int maxi;
+int maxHistory[10];
+int maxLevel;
+
+int isFinish()
+{
+	for (int i = 0; i < n; i++) {
+		if (used[i] == 0) return 0;
+	}
+	return 1;
+}
+
+void run(int level)
+{
+	if (isFinish() == 1) {
+
+		int sum = 0;
+		for (int i = 0; i < level; i++) {
+			sum += history[i];
+		}
+
+		if (sum > maxi) {
+			maxi = sum;
+			maxLevel = level;
+			for (int i = 0; i < level; i++) {
+				maxHistory[i] = history[i];
+			}
+		}
+
+		return;
+	}
+
+	for (int i = 0; i < n; i++) {
+		if (used[i] == 0) {
+			used[i]++;
+			if (i + 1 < n) used[i + 1]++;
+			if (i - 1 >= 0) used[i - 1]++;
+
+			history[level] = pan[i];
+			run(level + 1);
+			history[level] = 0;
+
+			used[i]--;
+			if (i + 1 < n) used[i + 1]--;
+			if (i - 1 >= 0) used[i - 1]--;
+		}
+	}
+}
+
+int main()
+{
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> pan[i];
+	}
+
+	run(0);
+
+	int i = 0;
+	for (i = 0; i < maxLevel - 1; i++) {
+		cout << maxHistory[i] << "+";
+	}
+	cout << maxHistory[i] << "=";
+	cout << maxi;
+
+	return 0;
+}
