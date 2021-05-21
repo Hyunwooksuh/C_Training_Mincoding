@@ -1,0 +1,154 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int n;
+char vect[10][10];
+void spin(int dy, int dx) {
+
+
+	char temp[10][10];
+	int num = dy + dx;
+	int num2 = dx - dy;
+	memcpy(temp, vect, 10 * 10 * 1);
+	for (int y = dy - 1; y <= dy + 1; y++) {
+		for (int x = dx - 1; x <= dx + 1; x++) {
+			temp[y][x] = vect[num - x][y + num2];
+		}
+	}
+	memcpy(vect, temp, 10 * 10 * 1);
+
+}
+int isExist() {
+
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x <= n-3; x++) {
+			if (vect[y][x] == 'A') {
+				if (vect[y][x] == vect[y][x + 1] && vect[y][x + 1] == vect[y][x + 2]) {
+					return 1;
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+int flag = 0;
+void back(int level) {
+
+	if (level == 6) {
+		int ret = isExist();
+		if (ret == 1) {
+			flag++;
+		}
+		return;
+	}
+
+	char backup[10][10];
+	memcpy(backup, vect, 10 * 10 * 1);
+	for (int y = 1; y < n - 1; y++) {
+		for (int x = 1; x < n - 1; x++) {
+			spin(y, x);
+			back(level + 1);
+			memcpy(vect, backup, 10 * 10 * 1);
+		}
+	}
+
+}
+int main()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			cin >> vect[y][x];
+		}
+	}
+	back(0);
+	if (flag >= 1) {
+		cout << "가능";
+	}
+	else cout << "불가능";
+
+	return 0;
+}
+---------------------------------------------------
+선생님 풀이 (spin함수가 더 간략함)
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char map[5][6];
+int n;
+int exitFlag;
+
+void spin(int dy, int dx)
+{
+	char temp[5][5];
+	dy -= 1;
+	dx -= 1;
+
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			temp[x][2 - y] = map[dy + y][dx + x];
+		}
+	}
+
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			map[dy + y][dx + x] = temp[y][x];
+		}
+	}
+}
+
+int isAAA(int dy, int dx) {
+	for (int y = -1; y <= 1; y++) {
+		int flag = 0;
+		for (int x = -1; x <= 1; x++) {
+			if (map[dy + y][dx + x] != 'A') {
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 0) return 1;
+	}
+	return 0;
+}
+
+void run(int level) {
+
+	if (level == 6) {
+		return;
+	}
+
+	char backup[5][6];
+	memcpy(backup, map, 5 * 6);
+
+	for (int y = 1; y < n - 1; y++) {
+		for (int x = 1; x < n - 1; x++) {
+
+			spin(y, x);
+			if (isAAA(y, x) == 1) {
+				exitFlag = 1;
+				return;
+			}
+			run(level + 1);
+			if (exitFlag == 1) return;
+			memcpy(map, backup, 5 * 6);
+
+		}
+	}
+}
+
+int main()
+{
+	cin >> n;
+	for (int y = 0; y < n; y++) {
+		cin >> map[y];
+	}
+
+	run(0);
+
+	if (exitFlag) cout << "가능"; 
+	else cout << "불가능";
+	
+	return 0;
+}

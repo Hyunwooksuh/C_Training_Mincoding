@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <queue>
+using namespace std;
+string str;
+char target[10];
+char bucket[100];
+int t = 0;
+char path[4];
+void back(int level, int start) {
+
+	if (level == 3) {
+		cout << path << '\n';
+		return;
+	}
+
+	for (int i = start; i < t; i++) {
+		path[level] = target[i];
+		back(level + 1, i);
+		path[level] = 0;
+	}
+
+}
+
+int main()
+{
+	cin >> str;
+
+	for (int i = 0; i < str.length(); i++) {
+		bucket[str[i]]++;
+	}
+	for (int i = 0; i < 100; i++) {
+		if (bucket[i] > 0) {
+			target[t++] = (char)(i);
+		}
+	}
+
+	back(0,0);
+
+	return 0;
+}

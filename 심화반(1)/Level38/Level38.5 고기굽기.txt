@@ -1,0 +1,122 @@
+#include <iostream>
+using namespace std;
+string input;
+
+void flip(int index) {
+
+	for (int i = index - 1; i <= index + 1; i++) {
+		if (i < 0 || i>=input.length()) continue;
+		if (input[i] == 'O') input[i] = 'X';
+		else if (input[i] == 'X') input[i] = 'O';
+	}
+}
+
+int flag = 0;
+int mini = 21e8;
+int isFullyFliped() {
+
+	for (int i = 0; i < input.length()-1; i++) {
+		if (input[i] != input[i + 1]) {
+			return 0;
+		}
+	}
+	return 1;
+
+}
+void back(int level) {
+	if (level >= mini) return;
+	if (level >= 5) return;
+
+	if (level <= 4) {
+		int ret = isFullyFliped();
+		if (ret== 1) {
+			flag++;
+			int cnt = level;
+			if (mini > cnt) mini = cnt;
+		}
+	}
+
+	string backup = input;
+	for (int i = 0; i <= input.length()-1; i++) {
+		flip(i);
+		back(level + 1);
+		input = backup;
+
+	}
+}
+
+int main()
+{
+	cin >> input;
+	back(0);
+	if (flag > 0) {
+		cout << mini;
+	}
+	else if (flag == 0) {
+		cout << "impossible";
+	}
+
+	return 0;
+}
+* 바닥 조건에 "if(level>mini) return"을 붙여주면 더 빨리 처리 가능
+------------------------------------------------------------------
+선생님 풀이
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char gogi[30];
+int n;
+int mini = 21e8;
+
+void flip(int dx) {
+	for (int i = -1; i <= 1; i++) {
+		int nx = dx + i;
+		if (nx < 0 || nx >= n) continue;
+
+		if (gogi[nx] == 'O') gogi[nx] = 'X';
+		else gogi[nx] = 'O';
+	}
+}
+
+int isPerfect() {
+	char ch = gogi[0];
+	for (int i = 0; i < n; i++) {
+		if (ch != gogi[i]) return 0;
+	}
+	return 1;
+}
+
+void run(int level) {
+
+	if (level >= mini) return;
+	if (isPerfect() == 1) {
+		if (mini > level) mini = level;
+		return;
+	}
+
+	if (level == 4) return;
+
+	char backup[30];
+	memcpy(backup, gogi, 30);
+
+	for (int i = 0; i < n; i++) {
+		flip(i);
+		run(level + 1);
+		memcpy(gogi, backup, 30);
+	}
+}
+
+int main()
+{
+	cin >> gogi;
+	n = strlen(gogi);
+
+	run(0);
+
+	if (mini == 21e8) cout << "impossible";
+	else cout << mini;
+
+	return 0;
+}
