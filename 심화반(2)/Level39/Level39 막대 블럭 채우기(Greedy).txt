@@ -1,0 +1,55 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int vect[10];
+int main() {
+
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> vect[i];
+	}
+	sort(vect, vect + n);
+	
+	int wall = 100;
+	int cnt = 0;
+	for (int i = 0; i < n; i++) {
+		if (wall >= vect[i]) {
+			wall -= vect[i];
+			cnt++;
+		}
+	}
+	cout << cnt;
+
+	return 0;
+}
+--------------------------------------------------------
+선생님 풀이 (내가 벽돌길이를 빼는 방식으로 구현하였다면, 선생님은 더한 값이 100을 넘을 때를 기준으로 구현)
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int n;
+int vect[10];
+
+int main()
+{
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> vect[i];
+	}
+
+	sort(&vect[0], &vect[n]);
+
+	int cnt = 0;
+	int sum = 0;
+	for (int i = 0; i < n; i++) {
+		sum += vect[i];
+		if (sum > 100) break;
+		cnt++;
+	}
+
+	cout << cnt;
+
+	return 0;
+}
