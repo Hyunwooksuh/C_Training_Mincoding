@@ -1,0 +1,100 @@
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+struct Node {
+	int score1;
+	int score2;
+};
+priority_queue<int, vector<int>, greater<int>> minheap;
+priority_queue<int, vector<int>, less<int>> maxheap;
+Node score[20];
+int main() {
+
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> score[i].score1 >> score[i].score2;
+	}
+
+	int mid = 500;
+	for (int i = 0; i < n; i++) {
+		int num1 = score[i].score1;
+		int num2 = score[i].score2;
+
+		if (num1 >= mid) minheap.push(num1);
+		else maxheap.push(num1);
+
+		if (num2 >= mid) minheap.push(num2);
+		else maxheap.push(num2);
+
+		if (minheap.size() == maxheap.size()) {
+			cout << mid << '\n';
+		}
+
+		if (minheap.size() > maxheap.size()) {
+			int temp = mid;
+			mid = minheap.top();
+			minheap.pop();
+			maxheap.push(temp);
+			cout << mid << '\n';
+		}
+		else if (maxheap.size() > minheap.size()) {
+			int temp = mid;
+			mid = maxheap.top();
+			maxheap.pop();
+			minheap.push(temp);
+			cout << mid << '\n';
+		}
+
+	}
+
+	return 0;
+}
+--------------------------------------------------------------------
+선생님 풀이 (아예 입력하고 나서 결과를 구현하는 방식으로 푸심)
+#include <iostream>
+#include <queue>
+using namespace std;
+
+priority_queue<int> lheap; //max heap
+priority_queue<int, vector<int>, greater<int>> rheap; //min heap
+int mid;
+
+void push(int v)
+{
+	if (mid > v) lheap.push(v);
+	else rheap.push(v);
+}
+
+int main()
+{
+	mid = 500;
+	
+	int n;
+	int a, b;
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> a >> b;
+
+		push(a);
+		push(b);
+
+		if (lheap.size() > rheap.size()) {
+			rheap.push(mid);
+			mid = lheap.top();
+			lheap.pop();
+		}
+		else if (lheap.size() < rheap.size()) {
+			lheap.push(mid);
+			mid = rheap.top();
+			rheap.pop();
+		}
+
+		cout << mid << "\n";
+	}
+	
+
+	return 0;
+}
