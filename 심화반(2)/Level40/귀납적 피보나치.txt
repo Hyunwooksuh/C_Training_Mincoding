@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+//귀납적 방식의 피보나치 수열 구현 
+
+int memo[100];
+
+int run(int value) {
+
+	if (memo[value] != 0) return memo[value];
+
+	if (value == 0) return 0;
+	if (value == 1) return 1;
+
+	int a = run(value - 2);
+	memo[value - 2] = a;
+
+	int b = run(value - 1);
+	memo[value - 1] = b;
+
+	return a + b;
+}
+int main() {
+
+	//0 1 1 2 3 5 8 13 21
+	cout << run(5);
+	
+	return 0;
+}

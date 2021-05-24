@@ -1,0 +1,56 @@
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+int map[4][4];
+int acc[5][5];
+int bang[4][4];
+void init() {
+
+	for (int i = 0; i <= 4; i++) {
+		acc[4][i] = 999;
+		acc[i][4] = 999;
+	}
+
+}
+enum {
+	RIGHT,
+	DOWN,
+};
+int main() {
+
+	init();
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			cin >> map[y][x];
+		}
+	}
+	for (int y = 3; y >= 0; y--) {
+		for (int x = 3; x >= 0; x--) {
+			if (y == 3 && x == 3) continue;
+			int right = acc[y][x + 1];
+			int down = acc[y + 1][x];
+
+			if (down >= right) {
+				acc[y][x] = right + map[y][x];
+				bang[y][x] = RIGHT;
+			}
+			else {
+				acc[y][x] = down + map[y][x];
+				bang[y][x] = DOWN;
+			}
+		}
+	}
+
+	int nowX = 0;
+	int nowY = 0;
+	while (1) {
+		cout << nowY << "," << nowX << '\n';
+		if (nowX == 3 && nowY == 3) break;
+		if (bang[nowY][nowX] == DOWN) nowY++;
+		else nowX++;
+	}
+
+	
+	return 0;
+}
