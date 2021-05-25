@@ -1,0 +1,50 @@
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+int n;
+int memo[100] = { 0 };
+int dp(int target) {
+	
+	if (memo[target] != 0) return memo[target];
+
+	if (target == 0) return 1;
+	if (target == 1) return 2;
+
+	int a = dp(target-1);
+	memo[target - 1] = a;
+	int b = dp(target-2);
+	memo[target - 2] = b;
+
+	return a + b;
+
+}
+int main() {
+
+	cin >> n;
+	cout << dp(n-1);
+
+	
+	return 0;
+}
+----------------------------------------------------
+선생님 풀이 (단순 for문으로 구현하셨음. 이제 이렇게 구현하도록 한다)
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int vect[100] = { 0, 1, 2 };
+
+	int n;
+	cin >> n;
+
+	for (int i = 3; i <= n; i++) {
+		vect[i] = vect[i - 2] + vect[i - 1];
+	}
+
+	cout << vect[n];
+
+	return 0;
+}

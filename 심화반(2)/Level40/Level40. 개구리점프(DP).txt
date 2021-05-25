@@ -1,0 +1,100 @@
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+int vect[7][3];
+int acc[7][3];
+int direct[3][2] = {
+	-1,-1,-1,0,-1,1,
+};
+void init() {
+
+	for (int i = 0; i < 3; i++) {
+		acc[0][i] = vect[0][i];
+	}
+
+
+	for (int y = 0; y < 7; y++) {
+		for (int x = 0; x < 3; x++) {
+			if (vect[y][x] == 0) acc[y][x] = -999;
+		}
+	}
+
+}
+
+int main() {
+
+	for (int y = 0; y < 7; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> vect[y][x];
+		}
+	}
+
+	init();
+
+	for (int y = 1; y < 7; y++) {
+		for (int x = 0; x < 3; x++) {
+			
+			if (vect[y][x] == 0) continue;
+
+			int max = 0;
+			for (int i = 0; i < 3; i++) {
+				
+				int ny = y + direct[i][0];
+				int nx = x + direct[i][1];
+				if (ny < 0 || nx < 0 || nx >= 3) continue;
+				if (acc[ny][nx] == -999) continue;
+
+				//acc[y][x] = vect[y][x] + acc[ny][nx];
+				if (acc[ny][nx] > max) max = acc[ny][nx];
+			}
+			acc[y][x] = vect[y][x] + max;
+
+		}
+	}
+	
+	int max = 0; 
+	for (int i = 0; i < 3; i++) {
+		if (acc[6][i] > max) max = acc[6][i];
+	}
+	cout << max;
+	
+
+
+	return 0;
+}
+------------------------------------------------------------------------------------ 
+선생님 풀이  (max함수 및 애초에 -999로 acc 배열 모두 초기화)
+#include<iostream>
+using namespace std;
+
+
+int map[7][3];
+int d[7][3];
+
+void init()
+{
+	for (int y = 0; y < 7; y++) {
+		for (int x = 0; x < 3; x++) {
+			cin >> map[y][x];
+			d[y][x] = -999;
+		}
+	}
+	
+}
+
+
+int main()
+{
+	init();
+	d[0][0] = map[0][0];
+	d[0][1] = -999;
+	d[0][2] = -999;
+	for (int i = 1; i < 7; i++) {
+		if (map[i][0] != 0)d[i][0] = max(d[i - 1][0], d[i - 1][1]) + map[i][0];
+		if (map[i][1] != 0)d[i][1] = max(d[i - 1][0], max(d[i - 1][1], d[i - 1][2])) + map[i][1];
+		if (map[i][2] != 0)d[i][2] = max(d[i - 1][1], d[i - 1][2]) + map[i][2];
+	}
+	cout << max(d[6][0], max(d[6][1], d[6][2]));
+	return 0;
+}
